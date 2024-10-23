@@ -1,0 +1,55 @@
+# It will give the complete workflow that how our pacs is working. - Himanshu.
+# This script installs and configures Orthanc DICOM server
+
+$directory = $PSScriptRoot
+$installer = 'orthanc.exe'
+$exeSource = Join-Path $directory -ChildPath $installer
+
+# Start the Orthanc installer
+$process = Start-Process -FilePath $exeSource -PassThru
+Wait-Process -Id $process.Id
+
+# Credentials for Orthanc
+$Username = 'admin'
+$Password = 'phP@123!'
+
+# Define the Lua script filename
+$filename = 'routing.lua'
+$source = Join-Path -Path $directory -ChildPath $filename 
+
+# Copy the Lua script to the Orthanc configuration directory
+Copy-Item -Path $source -Destination 'C:\Program Files\Orthanc Server\Configuration'
+
+# Configuration settings for Orthanc
+$orthanc = @{
+    # (Configuration details...)
+}
+
+# Convert configuration to JSON and save it
+$json = $orthanc | ConvertTo-Json 
+$json | Set-Content -Path 'C:\Program Files\Orthanc Server\Configuration\orthanc.json' -Encoding UTF8
+
+# Manage the Orthanc service
+$serviceName = 'orthanc'
+$service = Get-Service -Name $serviceName
+if ($service.Status -eq 'Running') {
+    Stop-Service -Name $serviceName -Force
+}
+
+# Set verbose logging
+Set-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Orthanc\Orthanc Server" -Name "Verbose" -Value 1
+Start-Service -Name $serviceName
+
+# Add inbound firewall rules for Orthanc
+$portHttp = 8042
+$portDicom = 4242
+
+# HTTP Inbound Rule
+New-NetFirewallRule -DisplayName "Orthanc HTTP" -Direction Inbound -Protocol TCP -LocalPort $portHttp -Action Allow -Profile Any
+
+# DICOM Inbound Rule
+New-NetFirewallRule -DisplayName "Orthanc DICOM" -Direction Inbound -Protocol TCP -LocalPort $portDicom -Action Allow -Profile Any
+
+# Confirmation message
+Write-Host "Inbound firewall rules for Orthanc have been added."
+Write-Host 'Installation Finished'
