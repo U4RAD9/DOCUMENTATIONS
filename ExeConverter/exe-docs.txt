@@ -1,0 +1,56 @@
+This is the exe converter that I've used for converting the bat file to x32 bit exe , i can download it from "Download.it".
+- Himanshu.
+---------------------
+Key Points for me :
+1. I've to first convert the bat file to x32 bit exe.
+2. I might need to change the bat file.
+3. I have to download the orthanc (x32 bit) installer.
+4. I might need to change the scripts of the lua file or u4rad.ps1 file for the exe to work correctly.
+=====================================================================================================================================
+BAT to EXE Converter (x64) is a 64-bit batch file compiler that can convert your scripts into portable programs that you could theoretically run on any modern Windows-based PC. As long as the machine had a processor that used the x86_64 instruction set, your code would execute perfectly. While it's a far cry from a complex IDE that supports multiple programming languages, it's a great tool for those who want to write their own pieces of software for automation purposes or to speed up tasks that they have to perform on a fairly regular basis.
+
+Chances are that you've written a batch file at one point in your computing career. These simple scripts date back to the days of MS-DOS and allow you to put multiple command line arguments into a single file. Windows, and its various predecessor operating systems, consider these commands to all be instructions attached to one program. BAT to EXE Converter lets you go one step further and tell windows that your batch files really are programs that should be treated as such.
+
+If you're a hardcore automation enthusiast, then you might have a batch file that runs somewhat slowly because of how complex it is. All you'd need to do is launch the converter, load the batch file and set a couple of options. It'll produce a standard Windows EXE file that runs as a program.
+
+You can opt to make your new program visible or invisible. While this version of the converter is designed to work with 64-bit machines, it can actually output 32-bit executable files. That means you could write programs on your device and then run them on other ones that have inferior hardware. It's a nice way to add some functionality to machines that you might have otherwise written off.
+
+That's also a good feature for those who plan on distributing their completed files over the Internet. If you write a program and want to share it, then you could offer both a 32 and 64-bit version available. Best of all, new developers who don't want to share their information with the world can elect to encrypt their applications before they upload them.
+
+When you first compile a batch file into an EXE application, you'll be given to encrypt the application with a password. That will ensure that anyone who tries to tamper with it won't be able to do their dirty work. You could also elect to not do this and distribute your application as an open source program. Batch files are simply text documents filled with a bunch of DOS commands, so anything could read them even if the host system in question wouldn't be able to run them.
+
+Regardless of what kind of encryption options you use, however, there's always the risk that someone could create some sort of EXE file with the software that could do harm to users who run it. While applications created with the converter won't normally run with administrator privileges, you could still theoretically create a program that deletes documents and images from a user's home directory.
+
+The same could be said of nearly any piece of development software, however, so this shouldn't be looked at as something wrong with BAT to EXE Converter specifically. It's something that you'd want to keep in mind if you plan on using the software in a corporate environment, however.
+
+A number of other basic options make it easy to fine tune the product's execution. When you compile a batch file, the program has to generate some temporary files and you're given the option to remove these automatically. Power users can overwrite existing files if they're creating a number of iterations of a particular script during testing. You might even want to compress your entire EXE using UPX technology, which can result in much smaller file sizes.
+
+In general, BAT to EXE Converter shouldn't generate compiled programs that are humongous. However, putting a wrapper around any DOS commands you placed in your batch file will of course increase it's size exponentially. That makes the compression option very useful, especially if you're putting together a number of small batch files since compiler overhead can start to become an issue when working with applications of this size.
+
+An additional page of configuration options gives you the freedom to set the application itself up however you'd like. You could tell the converter to remember its own window size and to only allow a single instance, which can help prevent situations where you accidentally start the program a number of times. Once you get a little more experienced with it, you can disable tooltips and prevent the program from periodically checking for updates.
+
+Serious developers have their pick of typeface, but the basic defaults should suffice. Perhaps more interesting is the wide collection of command line options that BAT to EXE Converter itself supports. While you'd expect this from a program that's so dedicated to the concept of automation, it's nice to see that those who want to rely solely on the Windows command line are able to do so.
+
+While you could easily import batch files that you've written in Notepad over into the converter, it also comes with a built-in editor. It's not an extremely immersive IDE by any means, but considering the simplicity of the language in question you shouldn't run into too many problems with it. More than likely, though, a majority of users will already have their scripts authored before they ever start the application up the first time.
+
+It's important to remember that this compiler is designed to work expressly with batch files, which means that PowerShell scripts are beyond its comprehension. That's somewhat of an issue for those who rely on more modern scripting tools, but it shouldn't impact those who use basic DOS commands. For that matter, it should be possible to convert Almquist and PowerShell scripts into batch files with just a little bit of translation.
+
+Batch scripting is nowhere near as powerful as scripting with these other languages. You're never going to be able to make it do the things that Ruby or Rails could do. However, this converter application goes a long way toward enabling power users to make batch scripting into a commercial grade automation language. If you find yourself typing the same commands over again or want to add a whole list of command line options to a program that you'd otherwise start graphically, then this could be the best tool for you.
+
+Pros :
+=========
+
+Compiles batch files for faster run times
+Optionally encrypts finished products
+Offers password protection schema
+Disassembles existing executables
+Simple interface
+Binaries run on any modern 64-bit Windows machines
+
+
+Cons :
+=========
+
+Could be used to create harmful software
+No support for Almquist scripts
+Only works with BAT formatted files

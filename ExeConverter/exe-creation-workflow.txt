@@ -1,0 +1,220 @@
+Converting the bat file in the x32 bit exe : - Himanshu.
+========================================================
+1. This is my Bat file :
+----------------------------------------------------------------
+::[Bat To Exe Converter]
+::
+::YAwzoRdxOk+EWAnk
+::fBw5plQjdG8=
+::YAwzuBVtJxjWCl3EqQJgSA==
+::ZR4luwNxJguZRRnk
+::Yhs/ulQjdF+5
+::cxAkpRVqdFKZSjk=
+::cBs/ulQjdF+5
+::ZR41oxFsdFKZSDk=
+::eBoioBt6dFKZSDk=
+::cRo6pxp7LAbNWATEpCI=
+::egkzugNsPRvcWATEpCI=
+::dAsiuh18IRvcCxnZtBJQ
+::cRYluBh/LU+EWAnk
+::YxY4rhs+aU+JeA==
+::cxY6rQJ7JhzQF1fEqQJQ
+::ZQ05rAF9IBncCkqN+0xwdVs0
+::ZQ05rAF9IAHYFVzEqQJQ
+::eg0/rx1wNQPfEVWB+kM9LVsJDGQ=
+::fBEirQZwNQPfEVWB+kM9LVsJDGQ=
+::cRolqwZ3JBvQF1fEqQJQ
+::dhA7uBVwLU+EWDk=
+::YQ03rBFzNR3SWATElA==
+::dhAmsQZ3MwfNWATElA==
+::ZQ0/vhVqMQ3MEVWAtB9wSA==
+::Zg8zqx1/OA3MEVWAtB9wSA==
+::dhA7pRFwIByZRRnk
+::Zh4grVQjdCuDJHCK4EciJghcRRTCK2SoDYk15vvv7uaLp18hYbYNWaub6pWtE6Bb8hOwPNgozn86
+::YB416Ek+ZW8=
+::
+::
+::978f952a14a936cc963da21a135fa983
+@echo off
+powershell -NoProfile -WindowStyle Hidden -Command "& {Start-Process PowerShell -ArgumentList '-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File \"%~dp0Scripts\u4rad.ps1\"' -Verb RunAs -Wait}"
+start cmd /c "echo U4RAD PACS Installation Finished & echo This window will close automatically in 5 seconds & timeout /t 5 /nobreak >nul"
+
+----------------------------------------
+2. Explanation of the Bat file :
+----------------------------------------
+Configurations and Settings in the Batch File :
+____________________________________________________
+Comments:
+
+The initial lines starting with :: are comments that likely contain metadata or encryption-related strings for the BAT to EXE Converter. These are not executed as part of the script.
+--
+Echo Command:
+
+@echo off: This command suppresses the display of command lines in the command prompt window.
+--
+PowerShell Command:
+
+powershell -NoProfile -WindowStyle Hidden -Command "& {Start-Process PowerShell -ArgumentList '-NoProfile -WindowStyle Hidden -ExecutionPolicy Bypass -File \"%~dp0Scripts\u4rad.ps1\"' -Verb RunAs -Wait}"
+
+* This line executes a PowerShell script (u4rad.ps1) located in the Scripts folder relative to the batch file’s directory.
+
+* The script runs in a hidden window, bypassing the execution policy to allow the script to run without restrictions.
+
+* The -Verb RunAs option requests elevated permissions, prompting the user for admin rights if necessary.
+--
+Final Command:
+
+start cmd /c "echo U4RAD PACS Installation Finished & echo This window will close automatically in 5 seconds & timeout /t 5 /nobreak >nul"
+
+This command opens a new command prompt window, displays messages indicating the installation is complete, and waits for 5 seconds before closing the window.
+_____________________________________
+
+Workflow of the Converted EXE :
+
+Execution:
+When the EXE is run, it begins executing the batch file contents.
+
+PowerShell Invocation:
+The batch file executes the PowerShell command to run the specified script in a hidden window with elevated privileges.
+
+Completion Notification:
+After the PowerShell script finishes executing, a new command prompt window appears, notifying the user that the installation is complete, followed by a 5-second countdown before it closes.
+-----------------------------------------------------------
+3. Now, till now i've got to know that it basically will run the u4rad.ps1 file internally , so i just need to check whether it is containing any x64bit specific commands or not :
+-----------------------------------------------------------
+Let's analyze the u4rad.ps1 file for any 64-bit specific commands and features:
+
+Key Components of the PowerShell Script :
+__________________________________________
+
+Variables and Paths:
+
+$directory, $installer, $exeSource: These variables define paths and filenames that are used in the script. They don't contain architecture-specific commands.
+
+Starting an External Process:
+
+Start-Process -FilePath $exeSource -PassThru: This starts the orthanc.exe. If this executable is available for both 32-bit and 64-bit, it’s not an issue. Ensure you have a compatible version for the target architecture.
+
+Copying Files:
+
+Copy-Item -Path $source -Destination 'C:\Program Files\Orthanc Server\Configuration': This command copies a Lua file to a specified directory, which is not architecture-specific.
+
+Hash Table for Configuration:
+
+The $orthanc hashtable contains various settings for the Orthanc server. These settings are general configurations and do not involve any architecture-specific commands.
+
+Setting Registry Keys:
+
+Set-ItemProperty -Path "Registry::HKEY_LOCAL_MACHINE\SOFTWARE\WOW6432Node\Orthanc\Orthanc Server": This accesses a registry path typically used for 32-bit applications on a 64-bit OS. This means it is designed to accommodate 32-bit applications but does not imply that the script is exclusive to 64-bit.
+
+Service Management:
+
+Get-Service, Stop-Service, Start-Service: These commands manage Windows services and are not architecture-specific.
+
+Firewall Rules:
+
+The commands for adding inbound firewall rules (New-NetFirewallRule) are also not dependent on architecture.
+______________________________
+* IMPORTANT
+______________________________
+
+64-bit Specific Commands
+
+Upon reviewing the script, there are no commands or features that are explicitly 64-bit specific. The script mainly uses general PowerShell commands that are applicable in both 32-bit and 64-bit environments.
+
+Considerations for 32-bit Conversion
+
+Executable Compatibility:
+
+Ensure that orthanc.exe is available in a 32-bit version. If the script relies on any other executables, ensure those are also 32-bit compatible.
+
+Registry Path:
+
+The registry path used (WOW6432Node) is appropriate for 32-bit applications running on a 64-bit system. This means if my script is intended for use on a 64-bit OS but targeting a 32-bit application, this is correct.
+
+Testing:
+
+After converting my batch file to a 32-bit EXE, test the entire workflow, including the PowerShell script, to confirm that all components work as expected on a 32-bit system.
+
+Summary
+No changes are needed for the PowerShell script when converting to a 32-bit executable, provided I have all the required 32-bit versions of any executables used. Just ensure that the entire setup is tested in the target environment to verify functionality.
+----------------------------------------------------
+4. Now , I have to install the Orthanc x32 bit software, and test that if the script is running correctly or not .
+----------------------------------------------------
+***** IMPORTANT ******
+______________________
+5. When I will open the bat to exe converter than , there will be certain options :
+      1. There will be a option of open any file, upload the u4rad.bat file there. Most of the times it will take the configurations           automatically.
+      2. If the configurations are not taken automatically , than I have to explicitly chose :
+         now, i have several things that the exe creator is asking me to do :
+	 1. icon
+         2. password 
+	 3. exe format (console (visible/invisible) , windows (visible/invisible))
+	 4. UAC : (checkbox : Request administrator privileges , checkbox : Request User Privileges )
+	 5. Packer : checkbox : Enable UPX compression
+	 6. Embedded Items : ( Method : (Synchronous/Asynchronous) , Delete on exit : (yes/no) , overwrite :(yes/no) , save 		   	    attibutes : (yes/no), display names : (yes/no) ) 
+	 7. Along with this, there will be option to select the input directory and output directory.
+      3. Explanation of options :
+         1. Icon : Here, i can add any icon of my choice , that will be visible on top of the exe.
+         2. Password : Here, i can set any password to protect the exe, anyone will be able to run the exe only when the password                 will be entered.
+         3. EXE Format :
+	    Console (Visible/Invisible):
+	    - Visible: Displays a command prompt window during execution.
+ 	    - Invisible: Runs in the background without showing a command prompt.
+	    Windows (Visible/Invisible):
+	    - Visible: Shows a GUI window if your application has a GUI.
+            - Invisible: Operates silently without a window.
+
+            Use Case: 
+            - If the script is primarily command-line driven and does not require user interaction, consider using an invisible               console format. If you want users to see output messages or progress, choose a visible console format.
+
+	    Options:
+
+	    Console (Invisible) if the user does not need to see commands.
+	    Windows (Visible) if you anticipate a GUI or need to display messages.
+         4. UAC (User Account Control) :
+            Request Administrator Privileges: Requires elevated permissions for the application to run.
+            - Ex. modify system files, access restricted resources, modifying the registery, managing the services, etc.
+            Request User Privileges: Runs with standard user permissions.
+         5. Packer :
+            Enable UPX Compression: Compresses the executable to reduce its file size.
+         6. Embedded Items :
+            Method:
+
+            - Synchronous: Waits for the process to complete before continuing.
+            - Asynchronous: Runs independently of the main process, allowing other operations to continue.
+            
+            Delete on Exit:
+
+            - Yes: Deletes the embedded item after execution.
+            - No: Keeps the item after execution.
+
+            Overwrite:
+
+            - Yes: Overwrites any existing file with the same name.
+            - No: Prevents overwriting.
+            
+            Save Attributes:
+
+            - Yes: Preserves file attributes (like read-only) for the embedded item.
+            - No: Does not preserve attributes.
+       
+            Display Names:
+
+            - Yes: Shows user-friendly names for embedded items.
+            - No: Uses the default system names.
+     4. Now, these are the options that I've to chose :
+        1. icon : chose the directory of the u4 icon.
+        2. pass : leave it blank.
+        3. exe format : 32 bit | windows (invisible)
+        4. UAC : Request admin privileges.
+        5. Packer : Leave blank
+        6. Method : Synchronous.
+        7. On all the remaining Embedded Items : Chose "NO".
+-----------------------------------------------------
+6. For , future reference, if someone is working on this pacs , these things are to be done simply :
+     1. Just download the latest orthanc installer from the orthanc website.
+     2. Use this converter or any other converter to convert the bat file to exe.
+     3. Make sure that the particular orthanc exe is used i.e. for x32 bit pacs exe use orthanc x32 bit installer, similarly for x64.
+     4. Add the ssl or any other certification for resolving the security issues.
+     5. You can combine the installation processes of both the exe and the orthanc installer as a whole by further working on these.
