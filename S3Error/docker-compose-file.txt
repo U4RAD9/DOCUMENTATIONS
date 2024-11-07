@@ -1,0 +1,89 @@
+# This is the docker-compose.yml file :
+=============================================
+
+services:
+  nginx:
+    image: nginx
+    ports:
+      - 2002:80
+    depends_on: [orthanc]
+    restart: unless-stopped
+    volumes:
+      - ~/credentials/default.conf:/etc/nginx/conf.d/default.conf
+
+  orthanc:
+    image: u4rad-orthanc
+    restart: unless-stopped
+    ports:
+      - 8042:8042
+    volumes:
+      - /orthanc-logs:/logs
+      - ~/Scripts:/usr/share/orthanc/Scripts
+      - ~/Test:/tmp/
+
+    environment:
+      - ORTHANC__AWS_S3_STORAGE__BUCKET_NAME=u4rad-s3-orthnac
+      #- ORTHANC__AWS_S3_STORAGE__BUCKET_NAME=arn:aws:s3:::u4rad-s3-orthnac
+      - ORTHANC__AWS_S3_STORAGE__REGION=ap-south-1
+      - ORTHANC__AWS_S3_STORAGE__ACCESS_KEY=xyz
+      #- ORTHANC__AWS_S3_STORAGE__SECRET_KEY=xyz
+      - ORTHANC__AWS_S3_STORAGE__ENABLE_AWS_SDK_LOGS=true
+      - ORTHANC__AWS_S3_STORAGE__REQUEST_TIMEOUT=3000
+      - ORTHANC__STABLE_AGE=60
+      - ORTHANC__AUTHENTICATION_ENABLED=true
+      - ORTHANC__DICOM_SERVER_ENABLED=true
+      - VERBOSE_ENABLED=true
+      - VERBOSE_STARTUP=true
+      - ORTHANC__HOUSEKEEPER__ENABLE=true
+      - ORTHANC__DELAYED_DELETION__ENABLE=true
+      - ORTHANC__HTTP_TIMEOUT=3600
+      - ORTHANC__HTTP_REQUEST_TIMEOUT=3600
+      - ORTHANC__STORAGE_ACCESS_ON_FIND=Always
+      - ORTHANC__DICOM_WEB__ENABLE=true
+      - ORTHANC__DICOM_WEB__ROOT=/dicom-web/
+      - ORTHANC__DICOM_WEB__ENABLE_WADO=true
+      - ORTHANC__DICOM_WEB__WADO_ROOT=/wado
+      - ORTHANC__DICOM_WEB__SSL=false
+      - ORTHANC__DICOM_WEB__STUDIES_METADATA=Full
+      - ORTHANC__DICOM_WEB__SERIES_METADATA=Full
+      - ORTHANC__DICOM_WEB__ENABLE_METADATA_CACHE=true
+      - ORTHANC__DICOM_WEB__METADATA_WORKER_THREADS_COUNT=4
+      - TRANSFERS_PLUGIN_ENABLED=true
+      - ORTHANC__TRANSFERS__MAX_HTTP_RETRIES=5
+      - LOGDIR=/logs
+      - ORTHANC__DE_IDENTIFY_LOGS=false
+
+      - ORTHANC__POSTGRESQL__ENABLE_INDEX=true
+      - ORTHANC__POSTGRESQL__ENABLE_STORAGE=false
+      - ORTHANC__POSTGRESQL__PORT=5432
+      - ORTHANC__POSTGRESQL__USERNAME=postgres
+      - ORTHANC__POSTGRESQL__DATABASE=orthanc
+      - ORTHANC__POSTGRESQL__ENABLE_SSL=false
+      - ORTHANC__POSTGRESQL__ENABLE_VERBOSE_LOGS=true
+      - ORTHANC__POSTGRESQL__TRANSACTION_MODE=ReadCommitted
+
+    secrets:
+      - ORTHANC__REGISTERED_USERS
+      - ORTHANC__AWS_S3_STORAGE__SECRET_KEY
+      - ORTHANC__POSTGRESQL__PASSWORD
+      - ORTHANC__POSTGRESQL__HOST
+      - ORTHANC__HOUSEKEEPER__SCHEDULE
+      - ORTHANC__LUA_SCRIPTS
+
+secrets:
+  ORTHANC__REGISTERED_USERS:
+    file: credentials/orthanc-users.json
+  ORTHANC__AWS_S3_STORAGE__SECRET_KEY:
+    file: credentials/aws-secretkey.txt
+  ORTHANC__POSTGRESQL__PASSWORD:
+    file: credentials/db-password.txt
+  ORTHANC__POSTGRESQL__HOST:
+    file: credentials/db-host.txt
+  ORTHANC__HOUSEKEEPER__SCHEDULE:
+    file: credentials/housekeeper-schedule.json
+  ORTHANC__LUA_SCRIPTS:
+    file: credentials/luaPath.txt
+
+=============================================================
+# I've checke the access keys , both the secret key and the access key is same in the orthanc.json configuration file and our docker compose file. 
+- Himanshu.

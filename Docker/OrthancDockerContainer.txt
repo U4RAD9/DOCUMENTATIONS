@@ -1,0 +1,40 @@
+# These are the containers running on our orthanc server (10.12.1.83)
+========================================================================
+CONTAINER ID   IMAGE           COMMAND                  CREATED      STATUS      PORTS                                       NAMES
+-------------------------------------------------------------------------------------------------------------------------------------
+xxxxxxx  nginx           "/docker-entrypoint.…"   3 days ago   Up 3 days   0.0.0.0:2002->80/tcp, :::2002->80/tcp       amangupta-nginx-1 
+------------------------
+yyyyy   u4rad-orthanc   "/docker-entrypoint.…"   3 days ago   Up 3 days   0.0.0.0:8042->8042/tcp, :::8042->8042/tcp   amangupta-orthanc-1 
+------------------------
+
+# I can understand the following things from the above data :
+===============================================================
+From the output you provided, it appears to be the result of running the docker ps command, which lists all the running Docker containers. Let's break it down:
+
+1. CONTAINER ID:
+xxxxxxx and yyyyy are the unique IDs of the two running containers. Docker generates these IDs when containers are created. You can use them to interact with the containers, e.g., using docker stop xxxxxxx.
+2. IMAGE:
+nginx and u4rad-orthanc are the Docker images that the containers are based on.
+nginx: This is a popular web server image.
+u4rad-orthanc: This seems to be a custom or specific image, possibly related to the Orthanc DICOM server (a server for managing medical images).
+3. COMMAND:
+"/docker-entrypoint.…": This indicates the entry point that the container is executing. Both containers are running with a typical entry point for their respective images. For example, the nginx container is running the default Nginx entrypoint, and the u4rad-orthanc container is running the entrypoint defined by the Orthanc image.
+4. CREATED:
+Both containers were created 3 days ago, indicating that they’ve been running continuously for 3 days since being started.
+5. STATUS:
+Up 3 days: Both containers have been up and running for 3 days without stopping or restarting.
+6. PORTS:
+This section shows the port mappings between the host machine and the containers. The format is <host_ip>:<host_port> -> <container_port>. The 0.0.0.0 and ::: (IPv6) mean the container is accessible from all network interfaces on the host.
+Container 1 (nginx):
+0.0.0.0:2002->80/tcp, :::2002->80/tcp: The container is exposing port 80 inside the container (default HTTP port) and mapping it to port 2002 on the host machine. You can access this Nginx server on http://<host_ip>:2002 or http://<host_ip_ipv6>:2002 (IPv6).
+Container 2 (u4rad-orthanc):
+0.0.0.0:8042->8042/tcp, :::8042->8042/tcp: The container is exposing port 8042 inside the container and mapping it to port 8042 on the host machine. You can access the Orthanc service at http://<host_ip>:8042 or http://<host_ip_ipv6>:8042.
+7. NAMES:
+amangupta-nginx-1 and amangupta-orthanc-1 are the automatically assigned or custom names for these containers. These names can be used instead of the container ID for interacting with the containers. For example, you can stop the nginx container using docker stop amangupta-nginx-1.
+Summary:
+You have two containers running:
+One is an Nginx web server, accessible on port 2002 on the host machine.
+The other is a u4rad-orthanc container, likely running an Orthanc DICOM server for medical image management, accessible on port 8042 on the host machine.
+Both containers have been running for 3 days without interruption.
+You can access the services by navigating to http://<host_ip>:2002 for Nginx and http://<host_ip>:8042 for the Orthanc DICOM server from a web browser.
+
