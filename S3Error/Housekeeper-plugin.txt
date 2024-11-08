@@ -1,0 +1,96 @@
+# Everything related to Housekeeper :
+======================================
+The Housekeeper plugin in Orthanc is used to manage the lifecycle of stored DICOM data, such as deleting old studies or moving them to external storage like S3. However, from your configuration, it seems like you've only enabled the Housekeeper and defined a schedule, but you might be missing a crucial setting: specifying where to store the deleted/moved data (such as S3) or the actual housekeeping actions.
+
+Here’s a more detailed explanation of how to make sure it works as expected:
+
+1. Housekeeper Plugin Overview
+The Housekeeper plugin’s job is to clean up old DICOM data, which can include deleting, archiving, or moving data to another storage backend (like your S3 bucket).
+The Schedule you've defined specifies the days and times when the housekeeping action should occur, but the Housekeeper's action (whether it moves data to S3 or just deletes it) must also be configured correctly.
+2. What’s Missing in Your Configuration?
+Your configuration snippet only includes the enable flag and schedule, but you need to specify what action to take on the data once it's identified by the housekeeping process.
+For example, you need to configure where to store the deleted or offloaded studies. In your case, this could be an S3 bucket or another external storage.
+3. Correct Configuration for S3 Storage with Housekeeper
+To ensure your old DICOM data is moved to the S3 bucket, you need to set the Housekeeper settings in the Orthanc configuration. Here's an example of what that could look like:
+
+json
+Copy code
+"Housekeeper": {
+  "Enable": true,
+  "Schedule": {
+    "Monday": ["1-6"],
+    "Tuesday": ["1-6"],
+    "Wednesday": ["1-6"],
+    "Thursday": ["1-6"],
+    "Friday": ["1-6"],
+    "Saturday": ["1-6"],
+    "Sunday": ["1-6"]
+  },
+  "Age": 30,  // Retain studies for 30 days and then clean them up
+  "Action": "Move",  // Action to take: Move to external storage or delete
+  "Storage": "S3",  // Specify that S3 is the target storage
+  "S3": {
+    "BucketName": "u4rad-s3-orthnac",
+    "Region": "ap-south-1"
+  }
+}
+Key points:
+Enable: True enables the housekeeping feature.
+Schedule: The schedule you’ve defined here specifies when housekeeping should run (Monday to Sunday).
+Age: Specifies how old the studies should be before they're eligible for cleanup.
+Action: What happens to the studies once they're selected for deletion. Here, "Move" means the data will be moved to S3.
+Storage: Specifies that the data will be stored in S3.
+S3: Contains your S3 storage configuration like the Bucket Name and Region.
+4. What Does Housekeeper Do?
+The Housekeeper plugin can perform several actions on the selected data:
+
+Delete: Deletes the selected studies/images after the specified time.
+Move: Moves the selected studies/images to another storage, like S3.
+Archive: Archives the data, which may be a custom action.
+Based on your configuration, if you have configured S3 as the destination and Move as the action, the housekeeper will move the data that is older than the configured age (e.g., 30 days) to the specified S3 bucket. The data will no longer be available locally within Orthanc after it's moved.
+
+5. Housekeeper with S3 (Example)
+Here’s an extended version of your configuration assuming you want to move the data to S3:
+
+json
+Copy code
+"Housekeeper": {
+  "Enable": true,
+  "Schedule": {
+    "Monday": ["1-6"],
+    "Tuesday": ["1-6"],
+    "Wednesday": ["1-6"],
+    "Thursday": ["1-6"],
+    "Friday": ["1-6"],
+    "Saturday": ["1-6"],
+    "Sunday": ["1-6"]
+  },
+  "Age": 30,  // Only consider studies older than 30 days
+  "Action": "Move",  // Move the data to S3
+  "S3": {
+    "BucketName": "u4rad-s3-orthnac",
+    "Region": "ap-south-1",
+    "AccessKey": "your-access-key",
+    "SecretKey": "your-secret-key"
+  }
+}
+This configuration ensures that:
+
+The Housekeeper plugin is active.
+Every Monday to Sunday, it will check the studies based on your schedule.
+If the study is older than 30 days, the housekeeper will move it to the specified S3 bucket.
+6. How It Works in Practice:
+Once you've configured the Housekeeper plugin and restarted your Orthanc container:
+
+The housekeeper will automatically check your data according to the defined schedule.
+If a study is older than the configured age (e.g., 30 days), it will be moved to your S3 bucket (if "Move" is configured).
+The data will be offloaded to S3 and removed from Orthanc’s local storage.
+7. Verify if It Works:
+To check if the Housekeeper is working as expected:
+
+Check Orthanc logs to see if the Housekeeper is performing its job. You should see entries like Housekeeper cleaning up data and moving it to S3.
+If you want to manually trigger a housekeeping action, you can use Orthanc’s REST API to run housekeeping immediately.
+Summary:
+The Housekeeper plugin should work automatically once it’s enabled and properly configured in your Orthanc configuration file.
+If you want the Housekeeper to move old studies to S3, make sure to configure the action to Move and provide the correct S3 bucket details.
+Verify the Housekeeper’s actions by checking the Orthanc logs and confirming that old data is moved to S3.

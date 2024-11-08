@@ -1,0 +1,435 @@
+# This is the updated log of 7th november 24 :
+===================================================
+aman.gupta@ip-10-12-1-83:/orthanc-logs$ cat Orthanc.log.20241107-123258.1 | head -n 1000
+W1107 12:32:58.588921             MAIN main.cpp:2059] Orthanc version: 1.12.4
+I1107 12:32:58.588983             MAIN main.cpp:2091] Architecture: 64-bit, little endian
+W1107 12:32:58.589131             MAIN OrthancConfiguration.cpp:58] Reading the configuration from: "/tmp/orthanc.json"
+I1107 12:32:58.589762             MAIN Toolbox.cpp:1577] Using locale: "en_US.UTF-8" for case-insensitive comparison of strings
+I1107 12:32:58.589986             MAIN Toolbox.cpp:1873] OpenSSL version: OpenSSL 3.1.4
+I1107 12:32:58.590956             MAIN FromDcmtkBridge.cpp:295] (dicom) Using DCMTK version: 368
+I1107 12:32:58.591042             MAIN FromDcmtkBridge.cpp:303] (dicom) Loading the embedded dictionaries
+I1107 12:32:58.626351             MAIN FromDcmtkBridge.cpp:315] (dicom) Loading the embedded dictionary of private tags
+I1107 12:32:58.646107             MAIN FromDcmtkBridge.cpp:2473] (dicom) Registering JPEG Lossless codecs in DCMTK
+I1107 12:32:58.646742             MAIN FromDcmtkBridge.cpp:2481] (dicom) Registering JPEG codecs in DCMTK
+I1107 12:32:58.646802             MAIN FromDcmtkBridge.cpp:2488] (dicom) Registering RLE codecs in DCMTK
+I1107 12:32:58.646826             MAIN Enumerations.cpp:2385] Default encoding for DICOM was changed to: Latin1
+I1107 12:32:58.677324             MAIN OrthancInitialization.cpp:387] Calling mallopt(M_ARENA_MAX, 5)
+W1107 12:32:58.677595             MAIN main.cpp:917] Loading plugin(s) from: /run/orthanc/plugins
+E1107 12:32:58.677616             MAIN PluginsManager.cpp:247] Inexistent path to plugins: /run/orthanc/plugins
+W1107 12:32:58.677622             MAIN main.cpp:917] Loading plugin(s) from: /usr/share/orthanc/plugins
+I1107 12:32:58.677653             MAIN PluginsManager.cpp:293] (plugins) Scanning folder /usr/share/orthanc/plugins for plugins
+I1107 12:32:58.677904             MAIN PluginsManager.cpp:316] (plugins) Found a shared library: "/usr/share/orthanc/plugins/libOrthancGdcm.so"
+W1107 12:32:58.698613             MAIN PluginsManager.cpp:274] Registering plugin 'gdcm' (version 1.7)
+I1107 12:32:58.698725             MAIN PluginsManager.cpp:162] (plugins) Initializing the decoder/transcoder of medical images using GDCM
+W1107 12:32:58.699204             MAIN PluginsManager.cpp:158] Orthanc will use GDCM to decode transfer syntax: 1.2.840.10008.1.2.4.90
+W1107 12:32:58.699218             MAIN PluginsManager.cpp:158] Orthanc will use GDCM to decode transfer syntax: 1.2.840.10008.1.2.4.91
+W1107 12:32:58.699225             MAIN PluginsManager.cpp:158] Orthanc will use GDCM to decode transfer syntax: 1.2.840.10008.1.2.4.92
+W1107 12:32:58.699232             MAIN PluginsManager.cpp:158] Orthanc will use GDCM to decode transfer syntax: 1.2.840.10008.1.2.4.93
+W1107 12:32:58.699241             MAIN PluginsManager.cpp:158] Throttling GDCM to 4 concurrent thread(s)
+W1107 12:32:58.699266             MAIN PluginsManager.cpp:158] Version of GDCM: 3.0.24
+I1107 12:32:58.699274             MAIN OrthancPlugins.cpp:2906] (plugins) Plugin has registered a callback to decode DICOM images (1 decoder(s) now active)
+I1107 12:32:58.699284             MAIN OrthancPlugins.cpp:2919] (plugins) Plugin has registered a callback to transcode DICOM images (1 transcoder(s) now active)
+I1107 12:32:58.699326             MAIN PluginsManager.cpp:316] (plugins) Found a shared library: "/usr/share/orthanc/plugins/libDelayedDeletion.so"
+W1107 12:32:58.700009             MAIN PluginsManager.cpp:274] Registering plugin 'delayed-deletion' (version 1.12.4)
+W1107 12:32:58.700461             MAIN delayed-deletion:/Plugin.cpp:330] DelayedDeletion - Path to the storage area: /var/lib/orthanc/db
+W1107 12:32:58.701038             MAIN delayed-deletion:/Plugin.cpp:337] DelayedDeletion - Path to the SQLite database: /var/lib/orthanc/db/pending-deletions.ababa8a8-dd52792b-0d9d47a4-9c483253-ed5ea6e2.db
+I1107 12:32:58.719040             MAIN OrthancPlugins.cpp:5626] (plugins) Plugin has registered a custom storage area
+I1107 12:32:58.719074             MAIN OrthancPlugins.cpp:2833] (plugins) Plugin has registered an OnChange callback
+I1107 12:32:58.719081             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /plugins/delayed-deletion/status
+I1107 12:32:58.719156             MAIN PluginsManager.cpp:316] (plugins) Found a shared library: "/usr/share/orthanc/plugins/libOrthancExplorer2.so"
+W1107 12:32:58.719834             MAIN PluginsManager.cpp:274] Registering plugin 'orthanc-explorer-2' (version 1.5.1)
+W1107 12:32:58.721892             MAIN PluginsManager.cpp:158] Root URI to the Orthanc-Explorer 2 application: /ui/
+I1107 12:32:58.721942             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/app/customizable/custom.css
+I1107 12:32:58.721967             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/app/assets/(.*)
+I1107 12:32:58.721983             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/app/index.html
+I1107 12:32:58.721992             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/app/token-landing.html
+I1107 12:32:58.722000             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/app/retrieve-and-view.html
+I1107 12:32:58.722007             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/app/favicon.ico
+I1107 12:32:58.722015             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/app/(.*)
+I1107 12:32:58.722023             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/app
+I1107 12:32:58.722031             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/api/configuration
+I1107 12:32:58.722038             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /ui/api/pre-login-configuration
+I1107 12:32:58.722049             MAIN OrthancPlugins.cpp:2833] (plugins) Plugin has registered an OnChange callback
+I1107 12:32:58.722162             MAIN PluginsManager.cpp:316] (plugins) Found a shared library: "/usr/share/orthanc/plugins/libOrthancDicomWeb.so"
+W1107 12:32:58.723343             MAIN PluginsManager.cpp:274] Registering plugin 'dicom-web' (version 1.17)
+I1107 12:32:58.724622             MAIN dicom-web:/Configuration.cpp:319] The DICOMweb plugin reads the DICOMweb servers from the configuration file
+W1107 12:32:58.724658             MAIN dicom-web:/Plugin.cpp:565] URI to the DICOMweb REST API: /dicom-web/
+I1107 12:32:58.724666             MAIN OrthancPlugins.cpp:2806] (plugins) Plugin has registered a REST callback for chunked streams on: /dicom-web/studies
+I1107 12:32:58.724745             MAIN OrthancPlugins.cpp:2806] (plugins) Plugin has registered a REST callback for chunked streams on: /dicom-web/studies/([^/]*)
+I1107 12:32:58.724778             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/instances
+I1107 12:32:58.724790             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/series
+I1107 12:32:58.724798             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/instances
+I1107 12:32:58.724808             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/metadata
+I1107 12:32:58.724818             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/series
+I1107 12:32:58.724827             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/series/([^/]*)
+I1107 12:32:58.724850             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/series/([^/]*)/instances
+I1107 12:32:58.724862             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/series/([^/]*)/instances/([^/]*)
+I1107 12:32:58.724898     
+I1107 12:32:58.724980             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/servers
+I1107 12:32:58.724990             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/servers/([^/]*)
+I1107 12:32:58.725232             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/servers/([^/]*)/stow
+I1107 12:32:58.725252             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/servers/([^/]*)/wado
+I1107 12:32:58.725261             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/servers/([^/]*)/get
+I1107 12:32:58.725270             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/servers/([^/]*)/retrieve
+I1107 12:32:58.725279             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/servers/([^/]*)/qido
+I1107 12:32:58.725292             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/servers/([^/]*)/delete
+I1107 12:32:58.725301             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/app/libs/(.*)
+I1107 12:32:58.725311             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/info
+I1107 12:32:58.725319             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/rendered
+I1107 12:32:58.725327             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/series/([^/]*)/rendered
+I1107 12:32:58.725722             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/series/([^/]*)/instances/([^/]*)/rendered
+I1107 12:32:58.725765             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/studies/([^/]*)/series/([^/]*)/instances/([^/]*)/frames/([^/]*)/rendered
+I1107 12:32:58.725784             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /studies/([^/]*)/update-dicomweb-cache
+I1107 12:32:58.725802             MAIN OrthancPlugins.cpp:2833] (plugins) Plugin has registered an OnChange callback
+I1107 12:32:58.725822             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /dicom-web/app/client/(.*)
+W1107 12:32:58.725941             MAIN dicom-web:/Plugin.cpp:647] DICOMWeb PublicRoot: /dicom-web/
+W1107 12:32:58.725952             MAIN dicom-web:/Plugin.cpp:658] URI to the WADO-URI API: /wado
+I1107 12:32:58.725957             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /wado
+I1107 12:32:58.726002             MAIN PluginsManager.cpp:316] (plugins) Found a shared library: "/usr/share/orthanc/plugins/libOrthancPostgreSQLIndex.so"
+W1107 12:32:58.742931             MAIN PluginsManager.cpp:274] Registering plugin 'postgresql-index' (version 6.2)
+I1107 12:32:58.743000             MAIN PluginsManager.cpp:162] (plugins) OpenSSL version: OpenSSL 3.0.11 19 Sep 2023
+W1107 12:32:58.743335             MAIN PluginsManager.cpp:158] PostgreSQL: using READ COMMITTED transaction mode
+W1107 12:32:58.743354             MAIN PluginsManager.cpp:158] The index plugin will use 1 connection(s) to the database, and will retry up to 10 time(s) in the case of a collision
+I1107 12:32:58.743369             MAIN OrthancPlugins.cpp:5764] (plugins) Plugin has registered a custom database back-end
+I1107 12:32:58.743382             MAIN OrthancPluginDatabaseV4.cpp:1293] (plugins) Identifier of this Orthanc server for the global properties of the custom database: "ababa8a8-dd52792b-0d9d47a4-9c483253-ed5ea6e2"
+I1107 12:32:58.743413             MAIN PluginsManager.cpp:316] (plugins) Found a shared library: "/usr/share/orthanc/plugins/libOrthancAwsS3Storage.so"
+W1107 12:32:58.755798             MAIN PluginsManager.cpp:274] Registering plugin 'AWS S3 Storage' (version 2.4.0)
+I1107 12:32:58.755866             MAIN AWS S3 Storage:/Toolbox.cpp:1873] OpenSSL version: OpenSSL 3.0.11 19 Sep 2023
+W1107 12:32:58.758416             MAIN AWS S3 Storage:/StoragePlugin.cpp:581] AWS S3 Storage plugin is initializing
+W1107 12:32:58.758604             MAIN AWS S3 Storage:/StoragePlugin.cpp:619] AWS S3 Storage: HybridMode is disabled: writing to object-storage and reading only from object-storage
+I1107 12:32:58.760230             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsChecking HOME for the home directory.
+I1107 12:32:58.760263             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsEnvironment value for variable HOME is /root
+I1107 12:32:58.760272             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsHome directory is missing the final / appending one to normalize
+I1107 12:32:58.760278             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsFinal Home Directory is /root/
+E1107 12:32:58.760294             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] Aws::Config::AWSConfigFileProfileConfigLoaderInitializing config loader against fileName /root/.aws/credentials and using profilePrefix = 0
+I1107 12:32:58.760302             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsChecking HOME for the home directory.
+I1107 12:32:58.760308             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsEnvironment value for variable HOME is /root
+I1107 12:32:58.760315             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsHome directory is missing the final / appending one to normalize
+I1107 12:32:58.760321             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsFinal Home Directory is /root/
+E1107 12:32:58.760328             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] Aws::Config::AWSConfigFileProfileConfigLoaderInitializing config loader against fileName /root/.aws/config and using profilePrefix = 1
+I1107 12:32:58.760335             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsChecking HOME for the home directory.
+I1107 12:32:58.760354             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsEnvironment value for variable HOME is /root
+I1107 12:32:58.760361             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsHome directory is missing the final / appending one to normalize
+I1107 12:32:58.760367             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsFinal Home Directory is /root/
+E1107 12:32:58.760390             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] Aws::Config::AWSConfigFileProfileConfigLoaderUnable to open config file /root/.aws/credentials for reading.
+E1107 12:32:58.760398             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] Aws::Config::AWSProfileConfigLoaderBaseFailed to reload configuration.
+I1107 12:32:58.760405             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsChecking HOME for the home directory.
+I1107 12:32:58.760411             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsEnvironment value for variable HOME is /root
+I1107 12:32:58.760418             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsHome directory is missing the final / appending one to normalize
+I1107 12:32:58.760424             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] FileSystemUtilsFinal Home Directory is /root/
+E1107 12:32:58.760435             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] Aws::Config::AWSConfigFileProfileConfigLoaderUnable to open config file /root/.aws/config for reading.
+E1107 12:32:58.760442             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] Aws::Config::AWSProfileConfigLoaderBaseFailed to reload configuration.
+I1107 12:32:58.760598             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] HttpClientFactoryInitializing Http Static State
+E1107 12:32:58.760623             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] EC2MetadataClientUsing IMDS endpoint: http://169.254.169.254
+I1107 12:32:58.760659             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] ClientConfigurationRequest Compression enabled
+I1107 12:32:58.760671             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] ClientConfigurationClientConfiguration will use MinReqCompression: 10240
+I1107 12:32:58.760718             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] ClientConfigurationClientConfiguration will use SDK Auto Resolved profile: [default] if not specified by users.
+E1107 12:32:58.760737             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] ClientConfigurationRetry Strategy will use the default max attempts.
+E1107 12:32:58.760771             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] EC2MetadataClientCreating AWSHttpResourceClient with max connections 2 and scheme http
+E1107 12:32:58.760784             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] CurlHandleContainerInitializing CurlHandleContainer with size 2
+I1107 12:32:58.760809             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] ClientConfigurationRequest Compression enabled
+I1107 12:32:58.760818             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] ClientConfigurationClientConfiguration will use MinReqCompression: 10240
+I1107 12:32:58.760826             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] ClientConfigurationClientConfiguration will use SDK Auto Resolved profile: [default] if not specified by users.
+E1107 12:32:58.760837             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] ClientConfigurationRetry Strategy will use the default max attempts.
+I1107 12:32:58.760854             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] EC2MetadataClientGetting current region for ec2 instance
+I1107 12:32:58.760896             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] EC2MetadataClientCalling EC2MetadataService to get token
+I1107 12:32:58.760923             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] EC2MetadataClientRetrieving credentials from http://169.254.169.254/latest/api/token
+I1107 12:32:58.760942             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientMaking request to http://169.254.169.254/latest/api/token
+I1107 12:32:58.760968             MAIN AWS S3 Storage:/AwsS3Storag
+sS3StoragePlugin.cpp:456] CurlHandleContainerConnection has been released. Continuing.
+I1107 12:32:58.761139             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerReturning connection handle 0x55d2a52a3560
+I1107 12:32:58.761147             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientObtained connection handle 0x55d2a52a3560
+I1107 12:32:58.766469             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientHTTP/1.1 200 OK
+
+I1107 12:32:58.766523             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientX-Aws-Ec2-Metadata-Token-Ttl-Seconds: 21600
+
+I1107 12:32:58.766543             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientContent-Length: 56
+
+I1107 12:32:58.766577             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientDate: Thu, 07 Nov 2024 12:32:58 GMT
+
+I1107 12:32:58.766592             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientServer: EC2ws
+
+I1107 12:32:58.766611             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientConnection: close
+
+I1107 12:32:58.766628             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientContent-Type: text/plain
+
+I1107 12:32:58.766640             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClient
+
+I1107 12:32:58.766660             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClient56 bytes written to response.
+I1107 12:32:58.766799             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReturned http response code 200
+I1107 12:32:58.766822             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReturned content type text/plain
+I1107 12:32:58.766834             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientResponse content-length header: 56
+I1107 12:32:58.766844             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientResponse body length: 56
+I1107 12:32:58.766852             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReleasing curl handle 0x55d2a52a3560
+I1107 12:32:58.766876             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerReleasing curl handle 0x55d2a52a3560
+I1107 12:32:58.766883             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerNotified waiting threads.
+I1107 12:32:58.766925             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] EC2MetadataClientRetrieving credentials from http://169.254.169.254/latest/meta-data/iam/security-credentials
+I1107 12:32:58.766946             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientMaking request to http://169.254.169.254/latest/meta-data/iam/security-credentials
+I1107 12:32:58.766957             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientIncluding headers:
+I1107 12:32:58.766981             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClienthost: 169.254.169.254
+I1107 12:32:58.766992             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientuser-agent: aws-sdk-cpp/1.11.178 ua/2.0 md/aws-crt# os/Linux/6.8.0-1015-aws md/arch#x86_64 lang/c++#C++17 md/GCC#12.2.0 cfg/retry-mode#default
+I1107 12:32:58.767004             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientx-aws-ec2-metadata-token: AQAEAMJ0n1AEkQ8l3UQzGvs5cLRX9kVmyyYG_4UVyaLIDikSDuwmRg==
+I1107 12:32:58.767024             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerAttempting to acquire curl connection.
+I1107 12:32:58.767031             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerConnection has been released. Continuing.
+I1107 12:32:58.767037             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerReturning connection handle 0x55d2a52a3560
+I1107 12:32:58.767044             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientObtained connection handle 0x55d2a52a3560
+I1107 12:32:58.768479             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientHTTP/1.1 200 OK
+
+I1107 12:32:58.768520             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientX-Aws-Ec2-Metadata-Token-Ttl-Seconds: 21600
+
+I1107 12:32:58.768535             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientContent-Type: text/plain
+
+I1107 12:32:58.768545             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientAccept-Ranges: none
+
+I1107 12:32:58.768554             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientLast-Modified: Thu, 07 Nov 2024 12:08:36 GMT
+
+I1107 12:32:58.768563             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientContent-Length: 13
+
+I1107 12:32:58.768572             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientDate: Thu, 07 Nov 2024 12:32:58 GMT
+
+I1107 12:32:58.768581             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientServer: EC2ws
+
+I1107 12:32:58.768592             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientConnection: close
+
+I1107 12:32:58.768854             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClient
+
+I1107 12:32:58.768873             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClient13 bytes written to response.
+I1107 12:32:58.768943             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReturned http response code 200
+I1107 12:32:58.768958             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReturned content type text/plain
+I1107 12:32:58.768967             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientResponse content-length header: 13
+I1107 12:32:58.768974             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientResponse body length: 13
+I1107 12:32:58.768982             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReleasing curl handle 0x55d2a52a3560
+I1107 12:32:58.769008             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerReleasing curl handle 0x55d2a52a3560
+I1107 12:32:58.769018             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerNotified waiting threads.
+I1107 12:32:58.769040             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] EC2MetadataClientCalling EC2MetadataService resource, /latest/meta-data/iam/security-credentials with token returned profile string u4rad-orthnac
+I1107 12:32:58.769064             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] EC2MetadataClientCalling EC2MetadataService resource http://169.254.169.254/latest/meta-data/iam/security-credentials/u4rad-orthnac with token.
+I1107 12:32:58.769084             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] EC2MetadataClientRetrieving credentials from http://169.254.169.254/latest/meta-data/iam/security-credentials/u4rad-orthnac
+I1107 12:32:58.769121             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientMaking request to http://169.254.169.254/latest/meta-data/iam/security-credentials/u4rad-orthnac
+I1107 12:32:58.769133             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientIncluding headers:
+I1107 12:32:58.769144             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClienthost: 169.254.169.254
+I1107 12:32:58.769153             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientuser-agent: aws-sdk-cpp/1.11.178 ua/2.0 md/aws-crt# os/Linux/6.8.0-1015-aws md/arch#x86_64 lang/c++#C++17 md/GCC#12.2.0 cfg/retry-mode#default
+I1107 12:32:58.769162             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientx-aws-ec2-metadata-token: AQAEAMJ0n1AEkQ8l3UQzGvs5cLRX9kVmyyYG_4UVyaLIDikSDuwmRg==
+I1107 12:32:58.769172             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerAttempting to acquire curl connection.
+I1107 12:32:58.769180             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerConnection has been released. Continuing.
+I1107 12:32:58.769189             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerReturning connection handle 0x55d2a52a3560
+I1107 12:32:58.769197             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientObtained connection handle 0x55d2a52a3560
+I1107 12:32:58.770106             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientHTTP/1.1 200 OK
+
+I1107 12:32:58.770144             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientX-Aws-Ec2-Metadata-Token-Ttl-Seconds: 21600
+
+I1107 12:32:58.770161             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientContent-Type: text/plain
+
+I1107 12:32:58.771778             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientAccept-Ranges: none
+
+I1107 12:32:58.771798             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientLast-Modified: Thu, 07 Nov 2024 12:08:36 GMT
+
+I1107 12:32:58.771813             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientContent-Length: 1586
+
+I1107 12:32:58.771825             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientDate: Thu, 07 Nov 2024 12:32:58 GMT
+
+I1107 12:32:58.771837             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientServer: EC2ws
+
+I1107 12:32:58.771850             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientConnection: close
+
+I1107 12:32:58.771862             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClient
+
+I1107 12:32:58.771879             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClient1586 bytes written to response.
+I1107 12:32:58.771993             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReturned http response code 200
+I1107 12:32:58.772010             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReturned content type text/plain
+I1107 12:32:58.772019             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientResponse content-length header: 1586
+I1107 12:32:58.772028             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientResponse body length: 1586
+I1107 12:32:58.772036             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReleasing curl handle 0x55d2a52a3560
+I1107 12:32:58.772094             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerReleasing curl handle 0x55d2a52a3560
+I1107 12:32:58.772105             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerNotified waiting threads.
+I1107 12:32:58.772159             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] EC2MetadataClientRetrieving credentials from http://169.254.169.254/latest/meta-data/placement/availability-zone
+I1107 12:32:58.772179             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientMaking request to http://169.254.169.254/latest/meta-data/placement/availability-zone
+I1107 12:32:58.772208             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientIncluding headers:
+I1107 12:32:58.772219             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClienthost: 169.254.169.254
+I1107 12:32:58.772228             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientuser-agent: aws-sdk-cpp/1.11.178 ua/2.0 md/aws-crt# os/Linux/6.8.0-1015-aws md/arch#x86_64 lang/c++#C++17 md/GCC#12.2.0 cfg/retry-mode#default
+I1107 12:32:58.772237             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientx-aws-ec2-metadata-token: AQAEAMJ0n1AEkQ8l3UQzGvs5cLRX9kVmyyYG_4UVyaLIDikSDuwmRg==
+I1107 12:32:58.772248             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerAttempting to acquire curl connection.
+I1107 12:32:58.772257             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerConnection has been released. Continuing.
+I1107 12:32:58.772266             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerReturning connection handle 0x55d2a52a3560
+I1107 12:32:58.772275             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientObtained connection handle 0x55d2a52a3560
+I1107 12:32:58.775279             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientHTTP/1.1 200 OK
+
+I1107 12:32:58.775337             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientX-Aws-Ec2-Metadata-Token-Ttl-Seconds: 21600
+
+I1107 12:32:58.775357             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientContent-Type: text/plain
+
+I1107 12:32:58.775370             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientAccept-Ranges: none
+
+I1107 12:32:58.775384             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientLast-Modified: Thu, 07 Nov 2024 12:08:36 GMT
+
+I1107 12:32:58.775397             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientContent-Length: 11
+
+I1107 12:32:58.775409             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientDate: Thu, 07 Nov 2024 12:32:58 GMT
+
+I1107 12:32:58.775422             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientServer: EC2ws
+
+I1107 12:32:58.775435             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientConnection: close
+
+I1107 12:32:58.775447             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClient
+
+I1107 12:32:58.775461             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClient11 bytes written to response.
+I1107 12:32:58.775547             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReturned http response code 200
+I1107 12:32:58.775564             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReturned content type text/plain
+I1107 12:32:58.775574             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientResponse content-length header: 11
+I1107 12:32:58.775583             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientResponse body length: 11
+I1107 12:32:58.775591             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHttpClientReleasing curl handle 0x55d2a52a3560
+I1107 12:32:58.775621             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerReleasing curl handle 0x55d2a52a3560
+I1107 12:32:58.775631             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] CurlHandleContainerNotified waiting threads.
+I1107 12:32:58.775656             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:456] EC2MetadataClientCalling EC2MetadataService resource /latest/meta-data/placement/availability-zone , returned credential string ap-south-1a
+E1107 12:32:58.775667             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] EC2MetadataClientDetected current region as ap-south-1
+I1107 12:32:58.775721             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:572] AWS S3 Storage: using credentials from the configuration file
+E1107 12:32:58.779322             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:464] CurlHandleContainerInitializing CurlHandleContainer with size 25
+I1107 12:32:58.786562             MAIN AWS S3 Storage:/AwsS3StoragePlugin.cpp:584] AWS S3 storage initialized
+W1107 12:32:58.786620             MAIN AWS S3 Storage:/StoragePlugin.cpp:703] AWS S3 Storage: client-side encryption is disabled
+I1107 12:32:58.786631             MAIN OrthancPlugins.cpp:5626] (plugins) Plugin has registered a custom storage area
+E1107 12:32:58.788358             MAIN PluginsManager.cpp:201] Exception while invoking plugin service 1016: Another plugin has already registered a custom storage area
+I1107 12:32:58.788463             MAIN PluginsManager.cpp:316] (plugins) Found a shared library: "/usr/share/orthanc/plugins/libOrthancPostgreSQLStorage.so"
+W1107 12:32:58.789525             MAIN PluginsManager.cpp:274] Registering plugin 'postgresql-storage' (version 6.2)
+I1107 12:32:58.789596             MAIN PluginsManager.cpp:162] (plugins) OpenSSL version: OpenSSL 3.0.11 19 Sep 2023
+W1107 12:32:58.790057             MAIN PluginsManager.cpp:158] The PostgreSQL storage area is currently disabled, set "EnableStorage" to "true" in the "PostgreSQL" section of the configuration file of Orthanc
+I1107 12:32:58.790107             MAIN PluginsManager.cpp:316] (plugins) Found a shared library: "/usr/share/orthanc/plugins/libOrthancTransfers.so"
+W1107 12:32:58.790803             MAIN PluginsManager.cpp:274] Registering plugin 'transfers' (version 1.5)
+I1107 12:32:58.791281             MAIN PluginsManager.cpp:162] (plugins) Transfers accelerator will use 4 thread(s) to run HTTP queries
+I1107 12:32:58.791299             MAIN PluginsManager.cpp:162] (plugins) Transfers accelerator will keep local DICOM files in a memory cache of size: 512 MB
+I1107 12:32:58.791307             MAIN PluginsManager.cpp:162] (plugins) Transfers accelerator will aim at HTTP queries of size: 4096 KB
+I1107 12:32:58.791315             MAIN PluginsManager.cpp:162] (plugins) Transfers accelerator will be able to receive up to 4 push transaction(s) at once
+I1107 12:32:58.791322             MAIN PluginsManager.cpp:162] (plugins) Transfers accelerator will retry 5 time(s) if some HTTP query fails
+I1107 12:32:58.791329             MAIN PluginsManager.cpp:162] (plugins) Transfers accelerator will use 2 seconds as a timeout when checking peers connectivity
+I1107 12:32:58.791336             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /transfers/chunks/([.0-9a-f-]+)
+I1107 12:32:58.791366             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /transfers/lookup
+I1107 12:32:58.791378             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /transfers/pull
+I1107 12:32:58.791387             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /transfers/send
+I1107 12:32:58.791397             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /transfers/peers
+I1107 12:32:58.791413             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /transfers/push
+I1107 12:32:58.791424             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /transfers/push/([.0-9a-f-]+)/([0-9]+)
+I1107 12:32:58.791441             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /transfers/push/([.0-9a-f-]+)/commit
+I1107 12:32:58.791455             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback without mutual exclusion on: /transfers/push/([.0-9a-f-]+)
+I1107 12:32:58.791469             MAIN OrthancPlugins.cpp:2932] (plugins) Plugin has registered a callback to unserialize jobs (1 unserializer(s) now active)
+I1107 12:32:58.791515             MAIN PluginsManager.cpp:316] (plugins) Found a shared library: "/usr/share/orthanc/plugins/libHousekeeper.so"
+W1107 12:32:58.792018             MAIN PluginsManager.cpp:274] Registering plugin 'housekeeper' (version 1.12.4)
+W1107 12:32:58.792074             MAIN housekeeper:/Plugin.cpp:810] Housekeeper plugin is initializing
+E1107 12:32:58.792516             MAIN housekeeper:/Plugin.cpp:894] Housekeeper invalid value for 'LimitMainDicomTagsReconstructLevel': ''
+I1107 12:32:58.792557             MAIN OrthancPlugins.cpp:2833] (plugins) Plugin has registered an OnChange callback
+I1107 12:32:58.792568             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback with mutual exclusion on: /housekeeper/status
+I1107 12:32:58.792590             MAIN OrthancPlugins.cpp:2789] (plugins) Plugin has registered a REST callback with mutual exclusion on: /plugins/housekeeper/status
+W1107 12:32:58.792643             MAIN main.cpp:1722] Using a custom database from plugins
+W1107 12:32:58.792651             MAIN main.cpp:1733] Using a custom storage area from plugins
+I1107 12:32:58.814366             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: BEGIN
+I1107 12:32:58.814888             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SET TRANSACTION ISOLATION LEVEL READ COMMITTED READ WRITE
+I1107 12:32:58.815554             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: select pg_try_advisory_lock(44)
+I1107 12:32:58.817397             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: COMMIT
+I1107 12:32:58.818149             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "411f2dd8-6695-4c6c-857e-347993c001a5"
+I1107 12:32:58.818554             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: BEGIN
+I1107 12:32:58.818935             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SET TRANSACTION ISOLATION LEVEL READ COMMITTED READ WRITE
+I1107 12:32:58.819374             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1 FROM pg_catalog.pg_class c JOIN pg_catalog.pg_namespace n ON n.oid = c.relnamespace WHERE n.nspname = 'public' AND c.relkind='r' AND c.relname=$1
+I1107 12:32:58.821317             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "d8d53328-3f53-409c-8bac-8095b5d38dcf"
+W1107 12:32:58.821790             MAIN PluginsManager.cpp:158] The database schema already exists, checking if it needs to be updated
+I1107 12:32:58.821846             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT value FROM GlobalProperties WHERE property=$1
+I1107 12:32:58.822894             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT value FROM GlobalProperties WHERE property=$1
+I1107 12:32:58.823414             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT value FROM GlobalProperties WHERE property=$1
+I1107 12:32:58.823883             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT value FROM GlobalProperties WHERE property=$1
+I1107 12:32:58.824356             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT value FROM GlobalProperties WHERE property=$1
+I1107 12:32:58.824811             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT value FROM GlobalProperties WHERE property=$1
+I1107 12:32:58.825269             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: COMMIT
+I1107 12:32:58.825810             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: BEGIN
+I1107 12:32:58.826309             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SET TRANSACTION ISOLATION LEVEL READ COMMITTED READ WRITE
+I1107 12:32:58.826807             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: select pg_advisory_unlock(44)
+I1107 12:32:58.827724             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: COMMIT
+I1107 12:32:58.828167             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "476edf00-ea0e-455c-a8b8-dc2c7009be01"
+I1107 12:32:58.828628             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: BEGIN
+I1107 12:32:58.829193             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SET TRANSACTION ISOLATION LEVEL READ COMMITTED READ ONLY
+I1107 12:32:58.829641             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT value FROM GlobalProperties WHERE property=$1
+I1107 12:32:58.830159             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: ABORT
+I1107 12:32:58.830743             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.831644             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "41d2dd13-710c-421e-82c5-bb492be2f1e6"
+I1107 12:32:58.832149             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.832894             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "c15f886a-7cd1-434f-9801-243ea6457243"
+I1107 12:32:58.833393             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.834510             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "e4e2a01b-1110-4319-be7e-a75c98649c51"
+I1107 12:32:58.834912             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.835639             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "d3e31bd8-7817-4778-932f-114d57a13d41"
+I1107 12:32:58.836000             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.836773             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "0058b3bb-599c-496b-8cf1-e3642062ea5f"
+I1107 12:32:58.837168             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.838081             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "453ba98a-6b0f-4c54-bb74-08e7f94fe3a2"
+I1107 12:32:58.838489             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.839264             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "c18db659-0bb5-4a66-9ba6-7ef57a2f3646"
+I1107 12:32:58.839753             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.840485             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "16970247-e711-4cfa-9ab6-b4c1240208c5"
+I1107 12:32:58.842852             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.843978             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "eb00ec72-ba93-4f00-afd2-34ff127bfda5"
+I1107 12:32:58.844841             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.845762             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "a58f25cd-df9b-465a-9a6f-f9695b644768"
+I1107 12:32:58.846144             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT 1
+I1107 12:32:58.847887             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: DEALLOCATE "7b036ca9-72c9-4476-a560-6746647db3e2"
+W1107 12:32:58.848328             MAIN main.cpp:1688] The DB latency is 897 µs
+W1107 12:32:58.848360             MAIN HttpClient.cpp:1195] HTTPS will use the CA certificates from this file: /etc/ssl/certs/ca-certificates.crt
+I1107 12:32:58.848369             MAIN HttpClient.cpp:516] (http) Setting the default timeout for HTTP client connections: 3600 seconds
+I1107 12:32:58.848377             MAIN HttpClient.cpp:500] (http) Setting the default proxy for HTTP client connections:
+I1107 12:32:58.848395             MAIN DicomAssociationParameters.cpp:397] (dicom) Default timeout for DICOM connections if Orthanc acts as SCU (client): 10 seconds (0 = no timeout)
+I1107 12:32:58.848619     UNSTABLE-MON ServerIndex.cpp:449] Starting the monitor for stable resources (stable age = 60)
+I1107 12:32:58.849161             MAIN LuaJobManager.cpp:69] (lua) Lua: DICOM associations will be closed after 5 seconds of inactivity
+I1107 12:32:58.849186             MAIN LuaScripting.cpp:764] Initializing Lua for the event handler
+W1107 12:32:58.849371             MAIN LuaContext.cpp:95] Lua says: Lua toolbox installed
+I1107 12:32:58.849385             MAIN LuaScripting.cpp:1044] Installing the Lua scripts from: /usr/share/orthanc/Scripts/writeToDatabase.lua
+W1107 12:32:58.849526             MAIN LuaContext.cpp:95] Lua says: Starting Lua script...
+I1107 12:32:58.849645             MAIN LuaJobManager.cpp:69] (lua) Lua: DICOM associations will be closed after 5 seconds of inactivity
+I1107 12:32:58.849665             MAIN LuaScripting.cpp:764] Initializing Lua for the event handler
+W1107 12:32:58.849863             MAIN LuaContext.cpp:95] Lua says: Lua toolbox installed
+I1107 12:32:58.849882             MAIN LuaScripting.cpp:1044] Installing the Lua scripts from: /usr/share/orthanc/Scripts/writeToDatabase.lua
+W1107 12:32:58.849992             MAIN LuaContext.cpp:95] Lua says: Starting Lua script...
+I1107 12:32:58.850023             MAIN ServerContext.cpp:452] Automated transcoding of incoming DICOM instances is disabled
+I1107 12:32:58.850029             MAIN ServerContext.cpp:459] (dicom) Deidentification of log contents (notably for DIMSE queries) is enabled
+I1107 12:32:58.850035             MAIN ServerContext.cpp:463] (dicom) Version of DICOM standard used for deidentification is 2023b
+I1107 12:32:58.850231             MAIN ServerContext.cpp:482] (dicom) Preferred transfer syntax for Orthanc C-STORE SCU: 1.2.840.10008.1.2.1
+I1107 12:32:58.850418             MAIN ServerContext.cpp:497] Starting memory trimming thread at 30 seconds interval
+I1107 12:32:58.850640             MAIN DcmtkTranscoder.cpp:78] Quality for lossy transcoding using DCMTK is set to: 90
+W1107 12:32:58.850657             MAIN ServerContext.cpp:575] Disk compression is disabled
+I1107 12:32:58.850664             MAIN ServerContext.cpp:1399] Storing MD5 for attachments: yes
+W1107 12:32:58.850671             MAIN ServerIndex.cpp:376] No limit on the number of stored patients
+W1107 12:32:58.850717             MAIN ServerIndex.cpp:396] No limit on the size of the storage area
+I1107 12:32:58.851156             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: BEGIN
+I1107 12:32:58.851625             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SET TRANSACTION ISOLATION LEVEL READ COMMITTED READ ONLY
+I1107 12:32:58.852123             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: SELECT value FROM ServerProperties WHERE server=$1 AND property=$2
+I1107 12:32:58.853450             MAIN PluginsManager.cpp:162] (plugins) PostgreSQL: COMMIT
+W1107 12:32:58.853865             MAIN ServerContext.cpp:286] Reloading the jobs from the last execution of Orthanc
+I1107 12:32:58.854155    JOBS-WORKER-0 JobsEngine.cpp:127] (jobs) Worker thread 0 has started
+W1107 12:32:58.854213             MAIN JobsEngine.cpp:273] The jobs engine has started with 2 threads
+I1107 12:32:58.854228    JOBS-WORKER-1 JobsEngine.cpp:127] (jobs) Worker thread 1 has started
+I1107 12:32:58.854314             MAIN DicomServer.cpp:137] (dicom) Setting timeout for DICOM connections if Orthanc acts as SCP (server): 30 seconds (0 = no timeout)
+I1107 12:32:58.854504             MAIN DicomServer.cpp:425] (dicom) Orthanc SCP will *not* use DICOM TLS
+I1107 12:32:58.854511             MAIN DicomServer.cpp:433] (dicom) The embedded DICOM server will use 4 threads
+W1107 12:32:58.854895             MAIN main.cpp:1329] DICOM server listening with AET ORTHANC on port: 4242
+I1107 12:32:58.854923             MAIN HttpServer.cpp:1611] (http) This Orthanc server uses CivetWeb as its embedded HTTP server
+I1107 12:32:58.854930             MAIN HttpServer.cpp:2122] (http) The embedded HTTP server will use 50 threads
+I1107 12:32:58.854936             MAIN HttpServer.cpp:1963] (http) HTTP keep alive is enabled
+I1107 12:32:58.854941             MAIN HttpServer.cpp:1977] (http) HTTP keep alive Timeout is now 1 seconds
+W1107 12:32:58.854946             MAIN HttpServer.cpp:2046] HTTP compression is disabled
+I1107 12:32:58.854951             MAIN HttpServer.cpp:2135] (http) TCP_NODELAY for the HTTP sockets is set to true
+I1107 12:32:58.854956             MAIN HttpServer.cpp:2155] (http) Request timeout in the HTTP server is set to 3600 seconds
+I1107 12:32:58.854968             MAIN main.cpp:1167] Version of Lua: Lua 5.4
+W1107 12:32:58.854973             MAIN main.cpp:1178] Remote LUA script execution is disabled
+W1107 12:32:58.854977             MAIN main.cpp:1190] REST API cannot write to the file system bacause the "RestApiWriteToFileSystemEnabled" configuration is set to false.  The URI /instances/../export is disabled.  This is the most secure configuration.
+I1107 12:32:58.855010             MAIN HttpServer.cpp:2202] (http) Branching WebDAV bucket at: /webdav
+I1107 12:32:58.855017             MAIN HttpServer.cpp:1659] (http) Starting embedded Web server using Civetweb
+I1107 12:32:58.855283     DICOM-SERVER DicomServer.cpp:66] (dicom) DICOM server started
+I1107 12:32:58.859436             MAIN OrthancWebDav.cpp:1699] Starting the WebDAV upload thread
+W1107 12:32:58.859580             MAIN HttpServer.cpp:1804] HTTP server listening on port: 8042 (HTTPS encryption is disabled, remote access is allowed)
+W1107 12:32:58.859597             MAIN main.cpp:929] Orthanc has started
+W1107 12:32:58.859617             MAIN delayed-deletion:/Plugin.cpp:245] DelayedDeletion - Starting the deletion thread
+I1107 12:32:58.859746             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins (built-in API)
+I1107 12:32:58.859909             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins/AWS S3 Storage (built-in API)
+I1107 12:32:58.860002             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins/delayed-deletion (built-in API)
+I1107 12:32:58.860093             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins/dicom-web (built-in API)
+I1107 12:32:58.860155             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins/gdcm (built-in API)
+I1107 12:32:58.860205             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins/housekeeper (built-in API)
+I1107 12:32:58.860250             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins/orthanc-explorer-2 (built-in API)
+I1107 12:32:58.860299             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins/postgresql-index (built-in API)
+I1107 12:32:58.860349             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins/postgresql-storage (built-in API)
+I1107 12:32:58.860398             MAIN OrthancPlugins.cpp:3224] (plugins) Plugin making REST GET call on URI /plugins/transfers (built-in API)
+I1107 12:32:58.860940             MAIN LuaScripting.cpp:862] Starting the Lua engine
+W1107 12:32:58.860961      HOUSEKEEPER PluginsManager.cpp:158] Starting Housekeeper worker thread
