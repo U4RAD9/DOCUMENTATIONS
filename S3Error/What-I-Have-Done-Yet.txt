@@ -1,0 +1,19 @@
+# Changes that I've made to fix the s3 Error :
+===================================================
+1. I've added the verbosity environment variable : 
+2. I've added the transfer mode as transfer manager , it should be by default , but somehow, it was facing some issue so i added this line explicitly.
+3. tried to add the verbosity in the aws configuration too , but i guess it didnt worked correctly ( not sure)
+4. I have increased the timeout in the s3 configuration from 3 seconds to 60 seconds.
+5. I have tried to add the additional volume to get the original orthanc.json file, but it is useless, since the orthanc docker functionality is configured in such a way that it creates the config file temporarily and use that particular file everytime.
+( Read the gpt answers for more clarification)
+6. 
+
+===================================================
+Observations or Things I need to work/research:
+===================================================
+1. Bucket policy and IAM roles difference and working.
+2. canonical user and iam user configuration.
+3. check the orthanc configuration , it is saying in the logs that the configuration is not correct 
+(a configuration conflict between plugins attempting to define custom storage locations (e.g., AWS S3 and PostgreSQL)- This is the response from gpt , so i have to see this in detail) 
+4. I think the plugins are not working as expected, the postgres data storage is also coming from the lua script not the plugin , so might be there are chances that joe's lua is working on top of the plugin architecture.
+5. Check how to configure plugin correctly.

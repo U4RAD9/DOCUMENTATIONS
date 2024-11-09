@@ -1,0 +1,34 @@
+# This was the outcome of the new logs which came when i applied some changes to the docker-compose file.
+=================================================================================================================
+It looks like you’ve shared logs from an Orthanc server, which is a lightweight DICOM server commonly used in healthcare applications. Here's a breakdown of the log content:
+
+AWS S3 Interaction:
+The log contains interactions with AWS S3 storage, including HTTP requests made to the AWS metadata service and successful HTTP 200 responses. The metadata being fetched is related to the instance's availability zone (ap-south-1a), and credentials are being used to interact with AWS.
+
+Plugin Initialization:
+
+Several plugins are being loaded, including those for PostgreSQL storage, transfers, and housekeeper functionalities.
+The PostgreSQL plugin logs indicate a series of database interactions (such as BEGIN, COMMIT, SELECT, DEALLOCATE queries) to handle some operations related to the storage and schema updates.
+Some warnings indicate potential configuration issues or options, such as the PostgreSQL storage being disabled and the database schema already existing.
+Custom Storage Area:
+The system has custom storage areas configured via plugins (AWS S3 storage and PostgreSQL), and there is a conflict regarding the custom storage area registration by another plugin. This might be a configuration issue where multiple plugins are attempting to register the same storage area.
+
+Lua Scripting:
+
+Lua scripting is being initialized, and scripts like writeToDatabase.lua are being installed and executed for event handling.
+This indicates that the system is designed to run custom scripts in response to specific events or triggers (such as storing DICOM files or processing data).
+DICOM Settings:
+
+The Orthanc server is configured for DICOM communication. Key settings like transfer syntax, timeout values for DICOM associations, and deidentification are being logged.
+Automated transcoding for incoming DICOM instances is disabled, which means incoming images will not be converted or compressed on arrival unless explicitly handled.
+Housekeeper Plugin:
+The housekeeper plugin seems to be initializing but logs an error regarding an invalid configuration value for 'LimitMainDicomTagsReconstructLevel'. This might be a configuration issue in your Orthanc settings related to data reconstruction levels.
+
+Memory and Disk Configuration:
+
+The server is trimming memory periodically, likely to manage resource usage.
+Disk compression is disabled, meaning no automatic compression is applied to stored DICOM images, and attachments will have MD5 checksums stored for verification.
+Observations:
+Error with Custom Storage Areas: The message Another plugin has already registered a custom storage area suggests a configuration conflict between plugins attempting to define custom storage locations (e.g., AWS S3 and PostgreSQL). You may need to review your plugin configuration to ensure there is no overlap.
+Database Schema Warning: The message about the PostgreSQL schema already existing might mean that the database setup is partially done or misconfigured. It may be useful to verify the database initialization steps.
+Housekeeper Plugin Error: The issue with the LimitMainDicomTagsReconstructLevel suggests that the configuration might need correction to prevent errors during its operation.
