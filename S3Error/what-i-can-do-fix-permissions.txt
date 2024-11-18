@@ -1,0 +1,68 @@
+# This might be the networking issue in the orthanc-s3 configuration :
+========================================================================
+If you have provided the correct Access Key and Secret Key from an IAM user with AmazonS3FullAccess permissions and there are no additional bucket policies that would block access, but Orthanc is still not uploading images to S3, here are several key points you should check:
+
+1. IAM Permissions:
+AmazonS3FullAccess gives full access to all S3 buckets and objects, but there are some important things to ensure:
+Ensure the IAM user is correctly configured: Double-check that the IAM user you're using is correctly configured and that the Access Key and Secret Key are accurate.
+User Permissions: The IAM user should also have the correct permissions for s3:PutObject and s3:ListBucket on the relevant S3 bucket. If this is already covered by the AmazonS3FullAccess policy, this shouldn’t be an issue, but it's worth confirming.
+S3 Bucket and IAM User: If your IAM user is part of a group, make sure no other conflicting permissions are restricting access to S3 or the specific bucket.
+2. Bucket Permissions / Policies:
+No Bucket Policies or ACLs: You mentioned there are no bucket policies. However, if you do have any bucket policies or S3 Access Control Lists (ACLs) in place, make sure they are not inadvertently restricting access to the IAM user, particularly for the s3:PutObject action.
+
+Check the bucket policy on the S3 bucket to ensure that it allows uploads from the IAM user or any resources that might interact with the S3 bucket.
+Example of a permissive S3 bucket policy allowing access to all IAM users with AmazonS3FullAccess:
+
+json
+Copy code
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Effect": "Allow",
+      "Action": "s3:PutObject",
+      "Resource": "arn:aws:s3:::xyz-s3-orthnac/*"
+    }
+  ]
+}
+Bucket ACLs: Make sure the S3 bucket is not using any restrictive ACLs that might prevent the IAM user from uploading. ACLs can override the IAM permissions in some cases, so you might need to inspect them as well.
+
+3. Log Output / Debugging Orthanc Logs:
+Enable Debugging: To check what’s going wrong, you should enable debug-level logging in Orthanc. This will show detailed logs about what Orthanc is doing when it tries to upload images to S3. You can add "EnableAwsSdkLogs": true in the AwsS3Storage configuration to get debug logs related to the S3 SDK. This can provide insight into:
+Whether the request is even reaching AWS S3.
+If there are any errors related to permissions, missing keys, or connection issues.
+Example of enabling detailed AWS SDK logs:
+
+json
+Copy code
+"AwsS3Storage": {
+    "EnableAwsSdkLogs": true,
+    "Region": "ap-south-1",
+    "BucketName": "xyz-s3-orthnac",
+    "AccessKey": "dfd",
+    "SecretKey": "fdfd"
+}
+Check the Orthanc logs for any error messages related to the S3 upload. Look for common errors such as 403 Forbidden (permissions issue) or 400 Bad Request (incorrect request structure).
+4. Network Connectivity from Container:
+Outbound Internet Access: The EC2 instance where your Orthanc container is running must have outbound internet access to connect to AWS S3. If you're using VPCs, security groups, or private subnets, verify that there are no restrictions preventing access to S3.
+Check that your security group allows outbound traffic to the internet (for the EC2 instance) or verify any VPC endpoint settings (if using a private subnet) for S3.
+Proxy Issues: If you're behind a corporate proxy or firewall, ensure that it is not blocking outbound connections to AWS S3 services.
+5. AWS S3 SDK Integration in Orthanc:
+SDK/Software Versions: Ensure that the version of Orthanc you are using supports the AWS S3 integration. If you're using an older or custom build of Orthanc, it's worth verifying that the version you are running includes the proper AWS S3 SDK support.
+
+Check for Errors: If the EnableAwsSdkLogs setting is enabled, you can track detailed errors in the logs related to communication between Orthanc and AWS S3.
+
+6. S3 Transfer Configuration (AWS SDK Settings):
+The configuration of TransferMethod can also affect uploads. Since you're using transfer_manager, ensure it is the most appropriate method for your environment. Generally, transfer_manager should work fine for uploading large objects efficiently.
+7. Access Key and Secret Key Validity:
+Key Expiry or Revocation: Ensure that the AccessKey and SecretKey provided are still valid and haven’t been accidentally revoked or expired. IAM keys can be revoked or rotated, and this could cause failed uploads.
+Test Keys Outside Orthanc: Try using the same Access and Secret keys manually through the AWS CLI or SDK to ensure they are still valid and have the expected permissions.
+8. Check S3 Bucket Configuration for Object Lifecycle Policies or Versioning:
+Sometimes S3 buckets have lifecycle policies, versioning, or other features that could affect how objects are stored, overwritten, or archived. Make sure these features aren’t interfering with Orthanc's ability to upload images.
+Next Steps:
+Enable detailed logging in Orthanc for AWS SDK.
+Check the IAM policy and bucket policy to ensure no restrictions are in place.
+Verify network connectivity to AWS S3 from the container.
+Look for errors in Orthanc logs related to AWS S3 uploads.
+Test access to AWS CLI from within the container to see if there are any underlying connection issues.
+If after checking all of these areas you're still having trouble, feel free to share the relevant log output, and we can dive deeper into the exact error you're encountering.

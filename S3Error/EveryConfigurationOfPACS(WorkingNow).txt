@@ -1,0 +1,91 @@
+These are the current working configurations for our PACS Architecture - Himanshu.
+======================================================================================
+1. PACS installation :
+----------------------------
+Folder Architecture :
+
+ - In this we need to have basically a folder named (U4RAD-PACS) , better to save this name. 
+ - In this folder there should be two things , one is "U4RAD PACS.exe"(x64 bit or x32 bit) and the other is a "Scripts" Folder.
+ - In the Scripts Folder there should be 3 files present : Orthanc.exe (x64 bit or x32 bit) ,"u4rad.ps1" file and "routing.lua" file.
+
+Steps For Installing :
+
+ - After checking the folder Architecture, First make sure that the windows firewall is disabled completely ,and make sure any other     antivirus is also stopped/disabled.
+ - Now, just run the "U4RAD PACS.exe" by simply double clicking it. If it asks for any permission, allow it (Click OK).
+ - Now, you will see an Orthanc Explorer , just click "Next" , it will only ask one time to tick a different box which says allow the    exe, and then simply click "Next" everytime until you get a completion message . 
+ - Now, wait for 2-3 seconds , a black script box will be displayed (powershell terminal) , which will automatically get closed after    5 seconds.
+ - That's it ! Installation is Completed.
+
+How to Check if Installation was successful :
+
+ - Better to check if we have installed the s/w correctly, so first open chrome or any browser in the system where we have installed     our pacs s/w. Write "localhost:8042" or "127.0.0.1:8042" on the top search bar, If it asks for any Id/Pass, then write these          credentials : Username = 'admin' and Password = 'phP@123!', and enter if "Orthanc Exlorer" opens, this implies success.
+ - In case if the "Orthanc Explorer" is not present , or the "localhost:8042" is not giving any proper response, proceed with these      steps : "Click windows button" -> Type "Services" -> Open and Search for "Orthanc" -> Check after clicking on it that what is         coming on the left side of box "Start" or "Stop/Restart",if "Start" than click it and wait for it to get changed in "Stop/Restart"
+   and if not "Start" ,leave it as it is.
+ - Additional Step of checking, "Click windows button" -> Type "Advanced firewall settings" -> click on it, you will get an option       saying "Inbound Rules" -> click on it, than check if "Orthanc HTTP" or "DICOM Http" is written, if yes, than installation is 
+   successful.
+
+* NOTE : In Case if you face any problem, ask the IT Team for detailed solution.
+
+===================================================================================
+# After installing our PACS, we need to configure modality with our orthanc/pacs :
+===================================================================================
+2. Connecting Modality with our PACS :
+----------------------------------------
+Now, there will be three cases :
+
+ A. When both the PACS and the modality s/w from where the dicom images are to be sent are on the same system :
+
+    - On the modality s/w , Login with admin credentials (if present otherwise normal login).
+    - Search for settings, go to "Network" or "Services" or "Connection" or "Connectivity" or "Server "or any name related to             configuration of pacs or if you had Stradus configuration before, then check where it is configured before.
+    - There go to "PACS" or "Connectivity" section, or any place where it is asking to write the "Client AET" or "Server AET" title.
+    - If you've found it , take a screenshot, in case you want the same configurations again or you've configured incorrectly to            revert back the actions. 
+    - Now, check if it is asking to add another configuration, or change the same configuration, if add option is present than chose        that option.
+    - If only "AET Title" write "ORTHANC" and if it is asking for both client and server aet, than write this in both sections.
+    - In the "Server IP" write "127.0.0.1" and in the "Server Port" or "Port" or "Connection Port" write "4242".
+    - In the "Save AS" or "ADD" name write "U4RAD PACS" or any name you want to write.
+    - Then click "Verify" or "Check Connection" or whatever word written meaning checking/verifying the connection.
+    - If connection is established , or Verified Successfully, than apply the changes.
+
+ B. When our pacs is on another system and the modality software is present on different system : 
+
+    - On the system, go to the "Wifi" or "Network and Internet Settings" , and check to which wifi you are connected to , then click        on the "i" icon, and then search for "IPV4" address, and if connected to any LAN , then on the "networks" click on the                connected n/w and then search for "IPV4".
+    - OR , simply open CMD using these : "Click Windows Button and then type "cmd" and click enter" OR "press "Windows+R" then type         "cmd" and then press "Enter" ".
+    - When you get a terminal (command prompt "cmd"), then type "ipconfig" and press "Enter" , now , you will check the wifi name you       are connected to and then search for "IPV4" and if there is Lan/Cable internet availablity then search for "WLAN" and then            search for "IPV4" , now copy the address , it will be like "192.68.x.x" or "x.x.x.x". 
+
+Now 
+
+    - On the modality s/w , Login with admin credentials (if present otherwise normal login).
+    - Search for settings, go to "Network" or "Services" or "Connection" or "Connectivity" or "Server "or any name related to               configuration of pacs or if you had Stradus configuration before, then check where it is configured before.
+    - There go to "PACS" or "Connectivity" section, or any place where it is asking to write the "Client AET" or "Server AET" title.
+    - If you've found it , take a screenshot, in case you want the same configurations again or you've configured incorrectly to            revert back the actions. 
+    - Now, check if it is asking to add another configuration, or change the same configuration, if add option is present than chose        that option.
+    - If only "AET Title" write "ORTHANC" and if it is asking for both client and server aet, than write this in both sections.
+    - In the "Server IP" write your copied ipconfig address in this place "x.x.x.x" and in the "Server Port" or "Port" or "Connection       Port" write "4242".
+    - In the "Save AS" or "ADD" name write "U4RAD PACS" or any name you want to write.
+    - Then click "Verify" or "Check Connection" or whatever word written meaning checking/verifying the connection.
+    - If connection is established , or Verified Successfully, than apply the changes.
+
+ C. If there is no modality s/w available and we need to directly configure the modality :
+
+    - On the system, go to the "Wifi" or "Network and Internet Settings" , and check to which wifi you are connected to , then click        on the "i" icon, and then search for "IPV4" address, and if connected to any LAN , then on the "networks" click on the                connected n/w and then search for "IPV4".
+    - OR , simply open CMD using these : "Click Windows Button and then type "cmd" and click enter" OR "press "Windows+R" then type         "cmd" and then press "Enter" ".
+    - When you get a terminal (command prompt "cmd"), then type "ipconfig" and press "Enter" , now , you will check the wifi name you       are connected to and then search for "IPV4" and if there is Lan/Cable internet availablity then search for "WLAN" and then            search for "IPV4" , now copy the address , it will be like "192.68.x.x" or "x.x.x.x".  
+
+And
+ 
+    - On the modality configurations where you used to send the images previously, or in the "Settings" or "Network" configuration.
+    - Write the "AET" or "Client AET" or "Server AET" , in each place (or whatever present) "ORTHANC".
+    - In the "Server IP" section , add the copied ip address which you got from the pacs system as "x.x.x.x".
+    - In the "Server Port" or "Port" or "Connection Port" section write "4242".
+    - If it is asking for any name than give whatever name you want or write "U4RAD-PACS" name to it.
+    - That's it ! It is configured now.
+
+========================================================
+* Now, send a dicom image to our connected "U4RAD-PACS" and it will be available on the "Orthanc-Explorer" cloud and reporting bot within a minute.
+* If in case you face any issue, consult with the U4RAD IT team/support.
+========================================================
+3. Current Working Orthanc.json file :
+---------------------------------------
+
+
+

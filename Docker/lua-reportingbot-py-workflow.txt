@@ -1,0 +1,598 @@
+# complete workflow of the lua script and the reportingbot.py file on cloud : - Himanshu.
+=============================================================================================
+explain this code to me :
+aman.gupta@ip-10-12-1-83:~/Scripts$ cat writeToDatabase.lua
+print("Starting Lua script...")
+function OnStableStudy(studyId, tags, metadata)
+        local check = ParseJson(RestApiGet('/studies/'..studyId..'/instances'))
+        local instanceTags = ParseJson(RestApiGet('/instances/'..check[1]["ID"]..'/simplified-tags'))
+
+
+        local patientName = instanceTags["PatientName"]
+        local patientAge = string.sub(instanceTags["PatientAge"], 2, 3)
+        local patientGender = instanceTags["PatientSex"]
+        local patientID = instanceTags["PatientID"]
+        local studyDescription = instanceTags["StudyDescription"]
+        local address = instanceTags["InstitutionAddress"]
+        local studyDate = string.sub(instanceTags["StudyDate"], 7)..'-'..string.sub(instanceTags["StudyDate"], 5, 6)..'-'..string.sub(instanceTags["StudyDate"], 1, 4)
+        local bodyPart = instanceTags["BodyPartExamined"]
+
+
+        local command = 'python3 /usr/share/orthanc/Scripts/reportingbot.py "'..studyId..'" "'..patientName..'" "'..patientAge..'" "'..patientGender..'" "'..patientID..'" "'..studyDescription..'" "'..address..'" "'..studyDate..'" "'..bodyPart..'"'
+        print("Executing command:", command)
+        local handle = io.popen(command)
+        local result = handle:read("*a")
+        print(result)
+end
+aman.gupta@ip-10-12-1-83:~/Scripts$
+ChatGPT said:
+ChatGPT
+This Lua script seems to interact with an external API and run a Python script (reportingbot.py) with data gathered from an external study system. Let me break down the code and explain what each part does.
+
+Full Code Walkthrough:
+lua
+Copy code
+print("Starting Lua script...")
+This line prints a simple message to the console when the script starts. It serves as a marker to know when the script begins executing.
+
+OnStableStudy Function:
+lua
+Copy code
+function OnStableStudy(studyId, tags, metadata)
+This defines a Lua function named OnStableStudy, which takes three arguments:
+
+studyId: The ID of a study (likely a medical or scientific study).
+tags: The tags associated with the study (though this parameter is unused in the code).
+metadata: Additional metadata associated with the study (also not used directly in the code).
+The function OnStableStudy appears to be handling some post-processing tasks related to the study.
+
+Fetching Study Instances and Tags:
+lua
+Copy code
+local check = ParseJson(RestApiGet('/studies/'..studyId..'/instances'))
+RestApiGet('/studies/'..studyId..'/instances'): This line sends an HTTP GET request to an API endpoint that retrieves instances for a specific study (using the studyId provided).
+ParseJson(...): This is a function that likely converts the JSON response into a Lua table. The result is stored in the check variable.
+lua
+Copy code
+local instanceTags = ParseJson(RestApiGet('/instances/'..check[1]["ID"]..'/simplified-tags'))
+After retrieving the instances for the study, the script sends another API request to get the "simplified tags" for a specific instance, which is the first instance from the previous check array (check[1]).
+Again, it parses the returned JSON into the instanceTags variable.
+Extracting Data from instanceTags:
+The script extracts specific tags (information) from the instanceTags table and stores them in local variables. These variables likely represent patient and study details:
+
+lua
+Copy code
+local patientName = instanceTags["PatientName"]
+local patientAge = string.sub(instanceTags["PatientAge"], 2, 3)
+local patientGender = instanceTags["PatientSex"]
+local patientID = instanceTags["PatientID"]
+local studyDescription = instanceTags["StudyDescription"]
+local address = instanceTags["InstitutionAddress"]
+local studyDate = string.sub(instanceTags["StudyDate"], 7)..'-'..string.sub(instanceTags["StudyDate"], 5, 6)..'-'..string.sub(instanceTags["StudyDate"], 1, 4)
+local bodyPart = instanceTags["BodyPartExamined"]
+These lines are extracting information like:
+
+Patient Name (PatientName)
+Patient Age (PatientAge) – Only the last two digits are extracted (likely to get just the age in years).
+Patient Gender (PatientSex)
+Patient ID (PatientID)
+Study Description (StudyDescription)
+Institution Address (InstitutionAddress)
+Study Date (StudyDate) – The date format is rearranged from YYYYMMDD to DD-MM-YYYY.
+Body Part Examined (BodyPartExamined)
+The string.sub() function is used to extract specific parts of strings. For example, in the case of the Study Date, it's converting a date format from YYYYMMDD to DD-MM-YYYY.
+
+Running the Python Script with Data:
+lua
+Copy code
+local command = 'python3 /usr/share/orthanc/Scripts/reportingbot.py "'..studyId..'" "'..patientName..'" "'..patientAge..'" "'..patientGender..'" "'..patientID..'" "'..studyDescription..'" "'..address..'" "'..studyDate..'" "'..bodyPart..'"'
+Here, a shell command is being constructed to run a Python script (reportingbot.py) with the study and patient data as arguments. The .. operator is used in Lua to concatenate strings, so the resulting string would look something like:
+
+bash
+Copy code
+python3 /usr/share/orthanc/Scripts/reportingbot.py "studyId" "patientName" "patientAge" "patientGender" "patientID" "studyDescription" "address" "studyDate" "bodyPart"
+This command, when executed, will run the Python script and pass all the relevant data as arguments.
+
+Executing the Command:
+lua
+Copy code
+print("Executing command:", command)
+This line prints the constructed command to the console, which is useful for debugging or monitoring the script's execution.
+
+lua
+Copy code
+local handle = io.popen(command)
+local result = handle:read("*a")
+print(result)
+io.popen(command): This executes the command in the shell (using popen() to open a pipe to the command). It returns a file handle (handle).
+handle:read("*a"): This reads all the output from the command execution.
+print(result): This prints the output from the Python script to the console.
+The Python script (reportingbot.py) is expected to run with the provided arguments, and its output will be captured and printed here.
+
+Summary of the Workflow:
+Study and Instance Data Retrieval:
+The Lua script makes HTTP GET requests to fetch study instances and their associated tags (metadata).
+Extracting Relevant Information:
+It extracts specific details like the patient's name, age, gender, study description, study date, etc.
+Building the Command:
+It then constructs a shell command to execute a Python script (reportingbot.py) and passes the extracted data as command-line arguments.
+Running the Python Script:
+The Python script is executed using io.popen(), and its output is captured and printed to the console.
+Potential Use Case:
+This script is likely part of a larger medical imaging or study management system, where OnStableStudy is triggered when a study becomes "stable" or ready for further processing. The Lua script extracts relevant study metadata and then passes this data to the Python script (reportingbot.py), which could be generating reports, analyzing the data, or performing other tasks.
+
+Let me know if you'd like further clarification on any specific part of the script!
+
+
+
+You said:
+i have this configuration too in my orhthanc.json file :
+"PostgreSQL": {
+    "EnableSsl": false,
+    "Database": "orthanc",
+    "Username": "xyx", 
+    "EnableStorage": false,
+    "Port": 5432,
+    "TransactionMode": "ReadCommitted",
+    "EnableIndex": true,
+    "EnableVerboseLogs": true,
+    "Host": "10.12.0.92",
+    "Password": "postgres",
+    "Lock": false
+  },
+is it also working ? 
+ChatGPT said:
+ChatGPT
+The configuration you provided in the orthanc.json file is related to setting up Orthanc's connection to a PostgreSQL database. Based on the settings, Orthanc will attempt to interact with a PostgreSQL database running on the host 10.12.0.92 using the credentials specified. Let's break down the configuration line by line to understand what it does, and then I'll explain how to ensure it's working correctly.
+
+Configuration Breakdown:
+json
+Copy code
+"PostgreSQL": {
+    "EnableSsl": false,  // SSL is disabled for the database connection
+    "Database": "orthanc",  // The name of the PostgreSQL database
+    "Username": "xyx",  // Username for connecting to the database
+    "EnableStorage": false,  // Disable using PostgreSQL for storage (likely related to data storage in the database)
+    "Port": 5432,  // The PostgreSQL default port
+    "TransactionMode": "ReadCommitted",  // The database transaction isolation level
+    "EnableIndex": true,  // Enable indexing of data in PostgreSQL
+    "EnableVerboseLogs": true,  // Enable verbose logging for database interactions
+    "Host": "10.12.0.92",  // The IP address of the PostgreSQL server
+    "Password": "postgres",  // Password for the user `xyx`
+    "Lock": false  // Disables locking of the database (for concurrent access)
+}
+Detailed Explanation:
+EnableSsl:
+
+Set to false, meaning SSL encryption is not being used for the connection to the PostgreSQL server. This is common if the database is being accessed locally or within a secure network where SSL isn't necessary.
+Database:
+
+The name of the database to which Orthanc will connect is orthanc. This is where Orthanc will store its metadata if PostgreSQL is used as the database backend.
+Username:
+
+The database username is xyx. This is the user account Orthanc will use to authenticate with PostgreSQL.
+EnableStorage:
+
+Set to false, meaning Orthanc will not use PostgreSQL for data storage (such as storing DICOM images). If this is true, Orthanc could store DICOM images directly in the PostgreSQL database, but in this case, it is disabled.
+Port:
+
+The default PostgreSQL port is 5432, meaning the connection to PostgreSQL will be made via this port.
+TransactionMode:
+
+The transaction isolation level is set to "ReadCommitted". This is a standard isolation level in databases where each transaction sees the most recent committed data.
+EnableIndex:
+
+This is set to true, meaning Orthanc will enable indexing of data in PostgreSQL. This is essential for efficient querying of metadata stored in the database.
+EnableVerboseLogs:
+
+Set to true, which enables verbose logging for PostgreSQL-related actions. This helps in debugging by providing detailed logs about what Orthanc is doing with the database.
+Host:
+
+The IP address of the PostgreSQL server is 10.12.0.92. This is the location of the PostgreSQL instance Orthanc will connect to.
+Password:
+
+The password for the xyx user account is postgres. This will be used in combination with the Username to authenticate to the database.
+Lock:
+
+Set to false, meaning Orthanc will not enforce any locking mechanisms on the database, allowing for concurrent database access.
+Is it working?
+For this configuration to work, you need to ensure several things:
+
+PostgreSQL Database Setup:
+
+Ensure that PostgreSQL is running on the host 10.12.0.92 and that it's configured to accept connections on port 5432. You can verify this by logging into the PostgreSQL instance and checking if the database orthanc exists and can be accessed with the provided credentials (xyx / postgres).
+You can test the connection from the machine where Orthanc is running by running:
+
+bash
+Copy code
+psql -h 10.12.0.92 -U xyx -d orthanc
+It will prompt you for the password (postgres). If you can connect, then the database is up and the credentials are correct.
+
+Orthanc Configuration:
+
+Ensure that the orthanc.json file is being correctly read by Orthanc and that the database configuration is properly loaded.
+You can check Orthanc's logs to see if there are any issues connecting to PostgreSQL. Look for messages related to database connection or authentication.
+
+The log should show something like:
+
+Copy code
+PostgreSQL backend initialized successfully
+Or if there are errors, you'll see messages like:
+
+vbnet
+Copy code
+Error connecting to PostgreSQL database
+Database Permissions:
+
+Ensure the PostgreSQL user xyx has the necessary permissions to access the orthanc database. It should have sufficient rights to read, write, and index data in the database.
+You can check and grant the necessary permissions with SQL commands like:
+
+sql
+Copy code
+GRANT ALL PRIVILEGES ON DATABASE orthanc TO xyx;
+Network Accessibility:
+
+The IP 10.12.0.92 should be reachable from the server running Orthanc. Ensure there are no firewalls or network issues preventing Orthanc from reaching the PostgreSQL database.
+PostgreSQL SSL Setting:
+
+Since EnableSsl is set to false, make sure that the PostgreSQL server is not enforcing SSL. If the server requires SSL connections, you will need to enable SSL in your configuration (EnableSsl: true) and configure PostgreSQL for SSL.
+Orthanc's Role:
+
+You have "EnableStorage": false, which means Orthanc will not store DICOM files directly in PostgreSQL. Instead, it will likely store metadata (tags, patient information, etc.) in the PostgreSQL database while storing the actual DICOM images in a different storage backend (e.g., file system, S3, etc.). If you need Orthanc to store DICOM files in PostgreSQL, set "EnableStorage": true.
+How to Test:
+Check Orthanc Logs:
+
+Check the Orthanc logs for messages indicating successful or failed PostgreSQL connection.
+The log file is typically located at /var/log/orthanc/orthanc.log.
+Test SQL Operations:
+
+You can manually test if Orthanc can insert or retrieve data from PostgreSQL by querying the orthanc database directly (via psql or a PostgreSQL client) and checking if Orthanc's metadata tables are populated.
+Run Orthanc:
+
+If everything is set up correctly, when you run Orthanc, it should be able to use PostgreSQL for indexing and logging. If there's an issue with the connection, Orthanc will likely log an error message.
+Summary:
+Yes, the configuration looks like it should work as long as:
+PostgreSQL is up and running on 10.12.0.92.
+The orthanc database exists and is accessible with the xyx user.
+There are no network/firewall issues preventing Orthanc from connecting to PostgreSQL.
+Orthanc is properly configured to connect to PostgreSQL as per your orthanc.json.
+Check your logs and ensure the network and database are properly configured, and it should work as expected!
+
+
+
+You said:
+so , will it write the data to the postgres if i have disabled the storage, i.e. enable storage = false ?
+ChatGPT said:
+ChatGPT
+No, if EnableStorage is set to false, Orthanc will not store DICOM images or any other data in PostgreSQL.
+
+Here’s what happens in more detail:
+
+What Does EnableStorage: false Mean?
+When you configure EnableStorage: false in Orthanc's orthanc.json file, you are disabling the use of PostgreSQL as a storage backend for the actual DICOM images. However, it does not mean Orthanc will stop using PostgreSQL for metadata storage (i.e., patient information, study metadata, etc.).
+
+In simpler terms:
+
+PostgreSQL is still used for indexing and storing metadata (like tags, patient information, study details), but it will not store the actual DICOM image files themselves.
+The actual DICOM image files will be stored elsewhere, such as on the local filesystem (in Orthanc's storage folder) or in an external storage solution like Amazon S3 or another cloud storage.
+However, disabling storage means Orthanc won't try to write large binary DICOM files to the PostgreSQL database, keeping PostgreSQL's role limited to storing metadata (which is a much smaller amount of data).
+
+What Happens When EnableStorage: true?
+If you set EnableStorage: true, Orthanc would store both the metadata and the actual DICOM image files in PostgreSQL. This means all your DICOM data (images and metadata) will be stored as BLOBs (binary large objects) inside the PostgreSQL database.
+
+What Happens When EnableStorage: false?
+When EnableStorage: false:
+
+Orthanc will not store DICOM images in PostgreSQL. Instead, it stores them in the storage directory (e.g., /var/lib/orthanc/db/ on Linux by default, or any custom location specified in the configuration).
+Orthanc still writes metadata (tags) to PostgreSQL, as long as EnableIndex: true and the PostgreSQL configuration is correct.
+In essence:
+
+Storage refers to where the actual DICOM images are saved.
+Indexing refers to where the metadata about those images (such as tags, study info, etc.) is stored.
+So, with EnableStorage: false, you are telling Orthanc:
+
+Don't store DICOM images in PostgreSQL.
+Still use PostgreSQL to store the metadata (tags, patient info, etc.).
+To Summarize:
+With EnableStorage: false, PostgreSQL will store metadata like patient details, study descriptions, etc.
+Orthanc will not use PostgreSQL for DICOM file storage but will store the actual DICOM images in a different location (local disk or another backend).
+The PostgreSQL database will not store DICOM images, but will handle metadata storage and indexing.
+If you want PostgreSQL to handle both metadata and DICOM file storage, set EnableStorage: true. Otherwise, with EnableStorage: false, PostgreSQL will only handle the metadata.
+
+
+You said:
+so , the data ( not images , only the image metadata) is getting stored on the db named orthanc
+so what is the role of lua script that i've previously shared , it is also writing some data to a db .
+ChatGPT said:
+ChatGPT
+You're correct that when EnableStorage: false in Orthanc, only metadata about the DICOM images (like patient information, study details, etc.) gets stored in the PostgreSQL database named orthanc, while the actual DICOM images themselves are stored separately (e.g., on the filesystem or in cloud storage).
+
+Now, regarding the Lua script you shared earlier, it is doing a different job. Let’s break it down in the context of what you’re trying to achieve with the database:
+
+Role of the Lua Script
+The Lua script you've shared is not directly interacting with the Orthanc database (PostgreSQL), but rather, it is executing an external Python script (reportingbot.py) that likely processes the DICOM study metadata and writes it to another database (or performs some other operations with the data).
+
+Here's a step-by-step explanation of what the Lua script does:
+lua
+Copy code
+print("Starting Lua script...")
+
+function OnStableStudy(studyId, tags, metadata)
+    -- Step 1: Get the list of instances for a specific study
+    local check = ParseJson(RestApiGet('/studies/'..studyId..'/instances'))
+    
+    -- Step 2: Get simplified tags for the first instance of the study
+    local instanceTags = ParseJson(RestApiGet('/instances/'..check[1]["ID"]..'/simplified-tags'))
+
+    -- Step 3: Extract relevant metadata from the instance tags
+    local patientName = instanceTags["PatientName"]
+    local patientAge = string.sub(instanceTags["PatientAge"], 2, 3)
+    local patientGender = instanceTags["PatientSex"]
+    local patientID = instanceTags["PatientID"]
+    local studyDescription = instanceTags["StudyDescription"]
+    local address = instanceTags["InstitutionAddress"]
+    local studyDate = string.sub(instanceTags["StudyDate"], 7)..'-'..string.sub(instanceTags["StudyDate"], 5, 6)..'-'..string.sub(instanceTags["StudyDate"], 1, 4)
+    local bodyPart = instanceTags["BodyPartExamined"]
+
+    -- Step 4: Build the command to run a Python script with the extracted metadata
+    local command = 'python3 /usr/share/orthanc/Scripts/reportingbot.py "'..
+                    studyId..'" "'..
+                    patientName..'" "'..
+                    patientAge..'" "'..
+                    patientGender..'" "'..
+                    patientID..'" "'..
+                    studyDescription..'" "'..
+                    address..'" "'..
+                    studyDate..'" "'..
+                    bodyPart..'"'
+
+    -- Step 5: Execute the Python command and capture its output
+    print("Executing command:", command)
+    local handle = io.popen(command)
+    local result = handle:read("*a")
+    print(result)
+end
+Detailed Explanation of the Lua Script
+OnStableStudy(studyId, tags, metadata):
+
+This function is triggered when a study is stable (i.e., when Orthanc has finished processing the DICOM images related to the study).
+It takes the study ID, tags, and metadata as inputs.
+Fetching Study and Instance Metadata:
+
+The script first makes an HTTP request to Orthanc’s REST API (RestApiGet('/studies/'..studyId..'/instances')) to get information about all the instances (DICOM files) for the given study.
+It then fetches simplified metadata (tags) for the first instance of the study using the ID of the first instance in the response (check[1]["ID"]).
+Extracting Information:
+
+The metadata (tags) fetched in the previous step contains various details about the patient and the study.
+The script extracts relevant fields from the tags:
+PatientName, PatientAge, PatientSex (gender), PatientID, StudyDescription, InstitutionAddress, StudyDate, and BodyPartExamined.
+Building the Command:
+
+It constructs a command string to call a Python script (reportingbot.py) and passes the extracted metadata (study and patient details) as arguments to the Python script.
+The Python script (reportingbot.py) likely processes this data further, potentially interacting with a database (which might be different from the Orthanc database) or generating reports or some other form of processing.
+Executing the Command:
+
+The command is executed using io.popen(command), which runs the Python script (reportingbot.py) and collects its output (result).
+The result is then printed out, which could be any output or logs generated by the Python script.
+What the Lua Script Is Not Doing
+The Lua script does not interact with the PostgreSQL database where Orthanc stores its metadata. Its primary job is to call an external Python script that is likely performing further processing with the data (perhaps inserting it into another database or generating a report).
+
+The Lua script is mainly used to:
+
+Retrieve DICOM metadata from Orthanc using its REST API.
+Extract relevant data from the tags (patient info, study info, etc.).
+Pass this data to an external Python script (reportingbot.py) that will take care of what happens next (e.g., inserting this data into another database, generating reports, etc.).
+What Does reportingbot.py Do?
+The Python script reportingbot.py is likely where the actual database insertion (or other data operations) happens. Given the way the Lua script is written, it's passing a set of metadata as command-line arguments to the Python script.
+
+If reportingbot.py is responsible for writing this data to a different database, the Lua script is essentially acting as a bridge to trigger this process whenever Orthanc finishes processing a study.
+
+Summary of the Workflow:
+Orthanc stores metadata (study, patient, etc.) in the PostgreSQL database (configured via orthanc.json).
+The Lua script is triggered when a study is processed (via OnStableStudy).
+The Lua script uses Orthanc's REST API to fetch additional metadata related to the study and its instances.
+The Lua script then passes this metadata to a Python script (reportingbot.py) that handles further processing, such as:
+Inserting this data into a different database (possibly a different one from PostgreSQL).
+Generating reports or other outputs based on the data.
+Key Points:
+Orthanc's PostgreSQL database stores metadata about DICOM studies and patients (but not the actual images if EnableStorage is false).
+The Lua script interacts with Orthanc's REST API, fetches metadata, and sends it to an external Python script.
+reportingbot.py is responsible for processing this data further, which could involve inserting it into a different database or generating reports.
+To confirm if the Lua script is writing to another database, you would need to look inside the reportingbot.py script to see how it handles the data it receives.
+
+
+
+You said:
+aman.gupta@ip-10-12-1-83:~/Scripts$ cat reportingbot.py
+import sys
+import psycopg2
+from psycopg2 import sql
+
+
+#Orthanc generated study id obtained from system variable
+study_id = sys.argv[1]
+
+#patientName variable obtained from system variable
+patientName = sys.argv[2]
+
+#patientAge variable obtained from system variable
+patientAge = sys.argv[3]
+
+#patientGender variable obtained from system variable
+patientGender = sys.argv[4]
+
+#patientId variable obtained from system variable
+patientId = sys.argv[5]
+
+#studyDesc variable obtained from system variable
+studyDesc = sys.argv[6]
+
+#address variable obtained from system variable
+address = sys.argv[7]
+
+#studyDate variable obtained from system variable
+studyDate = sys.argv[8]
+
+#bodyParts variable obtained from system variable
+bodyParts = sys.argv[9]
+
+
+
+
+# Create a tuple of all the data to insert into the PostgreSQL database
+data_to_insert = (patientName, patientId, patientAge, patientGender, studyDate, study_id, studyDesc, False, False, '', address, bodyParts)
+
+# Connect to PostgreSQL database
+conn = psycopg2.connect(
+    dbname='botdb',
+    user='xyz', 
+    password='zyz', 
+    host='10.12.0.92',
+    port='5432'
+)
+
+# Create a cursor object
+cursor = conn.cursor()
+
+# Insert the data into the users_dicomdata table
+insert_query = """
+    INSERT INTO users_dicomdata (
+        patient_name, patient_id, age, gender, study_date, study_id, study_description, "isDone", "NonReportable", notes, location, body_part_examined
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+"""
+cursor.execute(insert_query, data_to_insert)
+
+# Commit the transaction
+conn.commit()
+
+# Close the cursor and connection
+cursor.close()
+conn.close()
+aman.gupta@ip-10-12-1-83:~/Scripts$
+this is the reportingbot.py file . 
+ChatGPT said:
+ChatGPT
+Thank you for sharing the content of the reportingbot.py file. Based on this, I can now explain how the script works and its role in writing data to the PostgreSQL database.
+
+Overview of the reportingbot.py Script
+This Python script is designed to:
+
+Receive metadata about a DICOM study as command-line arguments (which were passed by the Lua script).
+Insert the received data into a PostgreSQL database (botdb).
+Detailed Breakdown of the Code
+Step 1: Accepting Command-Line Arguments
+python
+Copy code
+#Orthanc generated study id obtained from system variable
+study_id = sys.argv[1]
+
+#patientName variable obtained from system variable
+patientName = sys.argv[2]
+
+#patientAge variable obtained from system variable
+patientAge = sys.argv[3]
+
+#patientGender variable obtained from system variable
+patientGender = sys.argv[4]
+
+#patientId variable obtained from system variable
+patientId = sys.argv[5]
+
+#studyDesc variable obtained from system variable
+studyDesc = sys.argv[6]
+
+#address variable obtained from system variable
+address = sys.argv[7]
+
+#studyDate variable obtained from system variable
+studyDate = sys.argv[8]
+
+#bodyParts variable obtained from system variable
+bodyParts = sys.argv[9]
+The script takes nine command-line arguments, which are passed when the Lua script triggers the Python script. These arguments represent key metadata extracted from Orthanc:
+study_id: The ID of the study.
+patientName: The patient's name.
+patientAge: The patient's age.
+patientGender: The patient's gender.
+patientId: The patient's unique identifier.
+studyDesc: The description of the study.
+address: The institution address.
+studyDate: The date of the study.
+bodyParts: The body part examined.
+Step 2: Preparing Data for Insertion
+python
+Copy code
+# Create a tuple of all the data to insert into the PostgreSQL database
+data_to_insert = (patientName, patientId, patientAge, patientGender, studyDate, study_id, studyDesc, False, False, '', address, bodyParts)
+All the data extracted from the command-line arguments is organized into a tuple, data_to_insert. This tuple contains:
+Patient Name
+Patient ID
+Patient Age
+Patient Gender
+Study Date
+Study ID
+Study Description
+A boolean value False for the isDone field (likely used for some processing status).
+A boolean value False for NonReportable (probably indicating whether the study is reportable or not).
+An empty string for notes.
+Institution Address.
+Body Part Examined.
+This tuple represents a row of data that will be inserted into the users_dicomdata table in the PostgreSQL database.
+
+Step 3: Connecting to the PostgreSQL Database
+python
+Copy code
+# Connect to PostgreSQL database
+conn = psycopg2.connect(
+    dbname='botdb',
+    user='xyz', 
+    password='zyz', 
+    host='10.12.0.92',
+    port='5432'
+)
+The script establishes a connection to the PostgreSQL database (botdb) using the provided credentials (user='xyz', password='zyz') and host details (host='10.12.0.92', port='5432').
+This is the database where the metadata will be stored.
+Step 4: Creating the Cursor and Inserting Data
+python
+Copy code
+# Create a cursor object
+cursor = conn.cursor()
+
+# Insert the data into the users_dicomdata table
+insert_query = """
+    INSERT INTO users_dicomdata (
+        patient_name, patient_id, age, gender, study_date, study_id, study_description, "isDone", "NonReportable", notes, location, body_part_examined
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+"""
+cursor.execute(insert_query, data_to_insert)
+
+# Commit the transaction
+conn.commit()
+A cursor is created to interact with the database.
+The script then prepares an SQL INSERT query to insert the data into the users_dicomdata table. The column names in the SQL query match the fields that were passed as arguments to the script (such as patient_name, patient_id, etc.).
+cursor.execute(insert_query, data_to_insert) executes the query, passing the data_to_insert tuple as the parameters for the placeholders (%s).
+The transaction is committed with conn.commit(), which makes the changes permanent in the database.
+Step 5: Closing the Connection
+python
+Copy code
+# Close the cursor and connection
+cursor.close()
+conn.close()
+Finally, the cursor and database connection are closed to release resources.
+Summary of the reportingbot.py Workflow
+The Lua script triggers the reportingbot.py script with the DICOM metadata (patient name, study ID, age, etc.) as arguments.
+reportingbot.py connects to a PostgreSQL database (botdb), inserts the received metadata into the users_dicomdata table, and then commits the transaction.
+After insertion, the database connection is closed.
+Key Points
+Purpose: The Lua script is not interacting directly with the PostgreSQL database. Instead, it is passing DICOM metadata to the Python script (reportingbot.py), which is responsible for inserting this data into a PostgreSQL database (botdb).
+Database (botdb): The Python script writes the data to the users_dicomdata table in the botdb PostgreSQL database. This database is separate from Orthanc’s database (orthanc), and this script seems to be intended for tracking metadata related to the DICOM studies.
+Data: The data inserted into the PostgreSQL database includes the patient name, ID, age, gender, study description, etc., but not the actual DICOM images. The actual image files are handled separately by Orthanc.
+If your goal is to have both Orthanc and the Python script store and manage different types of metadata, this script (reportingbot.py) allows you to store additional information in a dedicated PostgreSQL database (botdb) based on the data that Orthanc retrieves and processes.
+===============================================================
+What this confirms :\
+===========================
+1. The orthanc.json configuration is writing the data( metadata only) to the database named orthanc present on our different server.
+2. The script is writing the metadata with the help of reportingbot.py file to our database named botdb present on the same server where "orthanc" db is present, but we are using botdb for our reporting bot and orthanc db just for our storage of data. 
+3. We can directly use orthanc db also , but maybe for simplicity of our reportingbot, we have created a different db and used it.
+4. VERY IMPORTANT :
+   - We can directly add the images in the orthanc database as blob too, but it is not recommended , the "EnableStorage" configuration in the postgres config allows to write the dicom images as blob, if false , that means the images are not written, only thier metadata is written.
