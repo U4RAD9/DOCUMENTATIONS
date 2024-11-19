@@ -1,0 +1,31 @@
+# These are some of the container details that i need to remember - Himanshu.
+===============================================================================
+root@a74890f8b2d6:/usr/share/orthanc# ls
+Scripts  plugins  plugins-available  plugins-disabled  plugins-disabled.README
+root@a74890f8b2d6:/usr/share/orthanc# cd Scripts
+root@a74890f8b2d6:/usr/share/orthanc/Scripts# ls
+reportingbot.py  writeToDatabase.lua
+root@a74890f8b2d6:/usr/share/orthanc/Scripts# ls -a
+.  ..  reportingbot.py  writeToDatabase.lua
+root@a74890f8b2d6:/usr/share/orthanc/Scripts# cd ..
+root@a74890f8b2d6:/usr/share/orthanc# cd plugins
+root@a74890f8b2d6:/usr/share/orthanc/plugins# ls
+libHousekeeper.so          libOrthancDicomWeb.so   libOrthancGdcm.so             libOrthancPostgreSQLStorage.so
+libOrthancAwsS3Storage.so  libOrthancExplorer2.so  libOrthancPostgreSQLIndex.so  libOrthancTransfers.so
+root@a74890f8b2d6:/usr/share/orthanc/plugins#
+==================================================================================
+# From above lines i can understand that the lua scripts that i wanted to add in the configuration so that the data is written explicitly to our new database for our reporting bot are coming and getting saved in "/usr/share/orthanc/Scripts" directory , and those are :
+1. routing.lua : for running the python file, it gets some data from the orthanc server and pass it to the py file.
+2. reporting.py : The main file which connects to db and writes the data in it.
+
+-------------------------
+# And the list of plugins that are configured in orthanc are mainly 8 , stored in container directory "/usr/share/orthanc/plugins" , and these are following :
+1. libHousekeeper.so 
+2. libOrthancDicomWeb.so   
+3. libOrthancGdcm.so             
+4. libOrthancPostgreSQLStorage.so
+5. libOrthancAwsS3Storage.so  
+6. libOrthancExplorer2.so  
+7. libOrthancPostgreSQLIndex.so  
+8. libOrthancTransfers.so
+
