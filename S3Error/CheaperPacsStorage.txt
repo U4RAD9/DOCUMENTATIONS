@@ -1,0 +1,50 @@
+# This is the approach how can i enable cheaper storage architecture for our PACS ( Orthanc - S3 )
+========================================================================================================
+Connecting AWS S3 to an External Archive in HybridMode:
+------------------------------------------------------------
+Yes, in the scenario you're describing, HybridMode can help you manage data between AWS S3 and an external, cheaper storage archive.
+
+If you're already using the PostgreSQL plugin for metadata and AWS S3 for media files (DICOM images), and you want to move 90% of the image data to a cheaper archive storage (such as Glacier, or a different low-cost archive solution), you can still leverage the HybridMode functionality in the following way:
+
+External Archive Storage: You would connect the external archive to Orthanc using a plugin that supports object storage (e.g., another S3 bucket configured for archive storage, or some other object storage solution).
+
+Using HybridMode:
+
+Set the HybridMode to WriteToFileSystem or WriteToObjectStorage, depending on your preferred setup.
+For WriteToFileSystem: You would keep recently accessed files on the file system (e.g., S3), while the older or less frequently accessed images would be stored in your external archive.
+For WriteToObjectStorage: Newly added files would be stored in S3, and the plugin would read files from the archive storage when needed (e.g., if Orthanc can't find the requested DICOM object in S3, it will check the external archive).
+Key Points:
+
+HybridMode provides flexibility for managing files across different storage solutions, including cheaper archival solutions.
+Orthanc will first look in the primary storage (S3) for the files.
+If the file isn't found in the primary storage, it will fall back to the external archive (if configured correctly) to fetch the file.
+So, yes, Orthanc will be able to automatically fetch data from the cheaper archive storage, as long as you've configured it properly, whether in the WriteToFileSystem or WriteToObjectStorage mode. The plugins allow you to have different storage tiers and provide fallbacks to ensure that data is retrieved from the most cost-effective storage solution when possible.
+
+Configuration Example for Hybrid Mode:
+Assuming you're using AWS S3 for active storage and an external archive (like Glacier or another storage solution) for long-term retention, here’s how the configuration might look in practice:
+
+json
+Copy code
+{
+  "S3Storage": {
+    "Enabled": true,
+    "Bucket": "active-s3-bucket",
+    "Region": "us-east-1",
+    "AccessKey": "your-access-key",
+    "SecretKey": "your-secret-key",
+    "HybridMode": "WriteToFileSystem"
+  },
+  "ExternalArchiveStorage": {
+    "Enabled": true,
+    "Bucket": "archival-s3-bucket",
+    "Region": "us-east-1",
+    "AccessKey": "your-archive-access-key",
+    "SecretKey": "your-archive-secret-key",
+    "HybridMode": "WriteToObjectStorage"
+  }
+}
+Summary:
+HybridMode gives flexibility by allowing Orthanc to use both file system storage and object storage (like AWS S3) together.
+WriteToFileSystem stores recent data on the file system for performance, while old data goes to object storage.
+WriteToObjectStorage writes new data to object storage and retrieves data from object storage first, using the file system only as a fallback.
+In your scenario, you can configure Orthanc to fetch data from your cheaper archive storage (such as Glacier or another low-cost storage option) by properly setting up the hybrid mode.
