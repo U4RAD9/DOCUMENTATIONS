@@ -1,5 +1,7 @@
 aman.gupta@ip-10-12-1-83:~/Scripts$ cat writeToDatabase.lua
 -- This is the updated code of lua script for storing data on our own database (bot db) along with the institution name and referring doctor name. - Himanshu.
+---------------------------------------------------------------------
+-- This is the updated code of lua script for storing data on our own database (bot db) along with the institution name and referring doctor name. - Himanshu.
 print("Starting Lua script...")
 function OnStableStudy(studyId, tags, metadata)
         -- Fetching study and instance tags
@@ -7,18 +9,18 @@ function OnStableStudy(studyId, tags, metadata)
         local instanceTags = ParseJson(RestApiGet('/instances/'..check[1]["ID"]..'/simplified-tags'))
 
         -- Extracting required fields
-        local patientName = instanceTags["PatientName"]
-        local patientAge = string.sub(instanceTags["PatientAge"], 2, 3)
-        local patientGender = instanceTags["PatientSex"]
-        local patientID = instanceTags["PatientID"]
-        local studyDescription = instanceTags["StudyDescription"]
-        local address = instanceTags["InstitutionAddress"]
-        local studyDate = string.sub(instanceTags["StudyDate"], 7)..'-'..string.sub(instanceTags["StudyDate"], 5, 6)..'-'..string.sub(instanceTags["StudyDate"], 1, 4)
-        local bodyPart = instanceTags["BodyPartExamined"]
+        local patientName = instanceTags["PatientName"] or "N/A"
+        local patientAge = string.sub(instanceTags["PatientAge"], 2, 3) or "N/A"
+        local patientGender = instanceTags["PatientSex"] or "N/A"
+        local patientID = instanceTags["PatientID"] or "N/A"
+        local studyDescription = instanceTags["StudyDescription"] or "N/A"
+        local address = instanceTags["InstitutionAddress"] or "N/A"
+        local studyDate = string.sub(instanceTags["StudyDate"], 7)..'-'..string.sub(instanceTags["StudyDate"], 5, 6)..'-'..string.sub(instanceTags["StudyDate"], 1, 4) or "N/A"
+        local bodyPart = instanceTags["BodyPartExamined"] or "N/A"
 
         -- Extracting Institution Name and Referring Doctor Name
-        local institutionName = instanceTags["InstitutionName"]
-        local referringDoctorName = instanceTags["ReferringPhysicianName"]
+        local institutionName = instanceTags["InstitutionName"] or "N/A"
+        local referringDoctorName = instanceTags["ReferringPhysicianName"] or "N/A"
 
         -- Building the command to call the Python script
         local command = 'python3 /usr/share/orthanc/Scripts/reportingbot.py "'..studyId..'" "'..patientName..'" "'..patientAge..'" "'..patientGender..'" "'..patientID..'" "'..studyDescription..'" "'..address..'" "'..studyDate..'" "'..bodyPart..'" "'..institutionName..'" "'..referringDoctorName..'"'
@@ -27,4 +29,5 @@ function OnStableStudy(studyId, tags, metadata)
         local result = handle:read("*a")
         print(result)
 end
+
 aman.gupta@ip-10-12-1-83:~/Scripts$

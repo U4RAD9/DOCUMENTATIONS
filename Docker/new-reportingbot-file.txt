@@ -1,4 +1,4 @@
-# This is the new reportingbot.py file added by me (09 dec 24) 
+# This is the new reportingbot.py file added by me (16 dec 24) 
 ==================================================================
 # This is the python file that will add the data to our own database (botdb present on our own server) along with the institution and referring doctor details too - Himanshu.
 import sys
@@ -71,4 +71,5 @@ conn.commit()
 # Close the cursor and connection
 cursor.close()
 conn.close()
+
 aman.gupta@ip-10-12-1-83:~/Scripts$
