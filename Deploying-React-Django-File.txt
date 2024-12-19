@@ -1,0 +1,137 @@
+# Deploying my build file :
+==============================
+Let's go step by step to explain how your React and Django programs are running, and then I'll guide you on how to set up Nginx for your specific requirements.
+
+1. How the Code is Running (React + Django)
+React Part:
+React Development Server (Port 3000):
+When you run npm start, React uses a development server (by default running on localhost:3000).
+It compiles your React app and serves it, allowing you to navigate through the frontend of the app using the browser (e.g., http://localhost:3000).
+When you visit URLs like /login, /dashboard, etc., in your React app, the routing is handled via the React Router (<Routes>, <Route>). It allows your frontend to dynamically switch views based on the URL without needing to refresh the page.
+Django Part (Backend):
+Django Backend (Gunicorn on Port 8000):
+The Django app is running separately on localhost:8000 using Gunicorn (which acts as a WSGI server).
+This backend handles API requests and serves data for your React app. For example, when your frontend React app sends a request to http://localhost:8000/api/companies/, it is routed through Django's view functions or Django Rest Framework's (DRF) viewsets (e.g., CompanyViewSet).
+In your Django URLs (urls.py), you've mapped API endpoints (e.g., /api/companies/) and the admin interface (/admin/).
+2. Required Setup for Nginx Configuration
+To achieve your requirement where Nginx serves:
+
+Your React app at the root (http://x.x.x.x)
+Your Django admin (/admin) served via Gunicorn on port 8000
+Follow these steps:
+
+Step 1: Install and Configure Nginx
+Install Nginx if it's not already installed:
+
+bash
+Copy code
+sudo apt update
+sudo apt install nginx
+Step 2: Build the React App
+In your React project directory, run the following command to build your app for production:
+
+bash
+Copy code
+npm run build
+This will create a build folder in your React project directory, containing static files (HTML, JS, CSS) that can be served by Nginx.
+
+Step 3: Configure Nginx for React and Django
+Create a new Nginx configuration file: You can create a new Nginx configuration file to serve both your React app and Django API. This file can be placed in /etc/nginx/sites-available/yourproject and then symlinked to /etc/nginx/sites-enabled/ to enable it.
+
+bash
+Copy code
+sudo nano /etc/nginx/sites-available/yourproject
+Add the following configuration:
+
+nginx
+Copy code
+server {
+    # React frontend configuration
+    listen 80;
+    server_name x.x.x.x;  # Use your IP address or domain
+
+    # React build directory to be served by Nginx
+    root /home/ubuntu/your-react-project/build;  # Path to the 'build' folder after running npm run build
+    index index.html;
+
+    # Serve React static files
+    location / {
+        try_files $uri $uri/ /index.html;  # Always serve index.html for React app
+    }
+
+    # Django admin part - reverse proxy to Gunicorn (running on port 8000)
+    location /admin/ {
+        proxy_pass http://127.0.0.1:8000/admin/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_redirect off;
+    }
+
+    # Django API requests - reverse proxy to Gunicorn (running on port 8000)
+    location /api/ {
+        proxy_pass http://127.0.0.1:8000/api/;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $remote_addr;
+        proxy_set_header X-Forwarded-Proto $scheme;
+        proxy_redirect off;
+    }
+
+    # Handle static files for Django if necessary
+    location /static/ {
+        alias /home/ubuntu/your-django-project/static/;  # Path to Django's static files
+    }
+
+    # Handle media files if needed
+    location /media/ {
+        alias /home/ubuntu/your-django-project/media/;  # Path to Django's media files
+    }
+}
+Explanation of this configuration:
+
+React App:
+The React app's static files (after running npm run build) will be served by Nginx. The location / block will serve the index.html file for any route that matches (thanks to try_files).
+Django Admin:
+Requests to /admin are proxied to your Django application running on localhost:8000. This is achieved with the proxy_pass directive.
+Django API:
+Requests starting with /api are also proxied to the Django app running on localhost:8000. This allows your React app to send API requests to Django.
+Static and Media Files:
+Static and media files can be directly served by Nginx (this is highly recommended for production).
+Create a symlink in /etc/nginx/sites-enabled to activate the configuration:
+
+bash
+Copy code
+sudo ln -s /etc/nginx/sites-available/yourproject /etc/nginx/sites-enabled/
+Test the Nginx configuration to ensure there are no syntax errors:
+
+bash
+Copy code
+sudo nginx -t
+Restart Nginx to apply the changes:
+
+bash
+Copy code
+sudo systemctl restart nginx
+Step 4: Run Django Backend with Gunicorn
+Start Gunicorn to serve your Django application. Make sure you’re in your Django project directory and activate your virtual environment if you have one.
+
+bash
+Copy code
+gunicorn --workers 3 --bind 127.0.0.1:8000 yourproject.wsgi:application
+This will start your Django app on localhost:8000.
+You can also use a process manager like systemd to make Gunicorn run as a service if you want it to restart automatically.
+Step 5: Test the Setup
+Frontend: Visit http://x.x.x.x/ (your server's IP). This should serve your React app.
+Django Admin: Visit http://x.x.x.x/admin/. This should load the Django admin interface, served via Gunicorn.
+Django API: Your API should be available under http://x.x.x.x/api/.
+Notes:
+Port 3000 for React: During development, React runs on port 3000 (via npm start), but when deploying for production, you should build the React app (npm run build) and serve the static files using Nginx.
+Gunicorn for Django: Gunicorn should be running on port 8000 or via a Unix socket (e.g., /tmp/gunicorn.sock) to serve the Django app. Nginx will reverse proxy requests to Gunicorn.
+No SSL for now: As you’ve requested not to enable SSL for now, the Nginx config is set up for HTTP. You can later enable SSL by using Certbot (for Let's Encrypt) and modifying the configuration for HTTPS.
+Conclusion:
+With this setup, you’ll have:
+
+React being served by Nginx as static files.
+Django admin and API requests being forwarded to Gunicorn running on port 8000 via Nginx.
+Nginx handling the reverse proxying and static file serving for both your frontend and backend.
+Let me know if you need further clarifications or adjustments!

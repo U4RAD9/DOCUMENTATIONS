@@ -1,0 +1,107 @@
+Let's break down the Lua script and explain each line, step by step, and then I'll guide you on how to retrieve the two additional fields you requested: Hospital Name and Referring Doctor's Name.
+
+Lua Script Breakdown
+lua
+Copy code
+print("Starting Lua script...")
+This prints the message "Starting Lua script..." to the console, which indicates that the Lua script has started executing.
+Function: OnStableStudy(studyId, tags, metadata)
+This function is triggered when a stable study is detected. It takes studyId, tags, and metadata as parameters, although in the body of the function, tags and metadata aren't used directly.
+lua
+Copy code
+    local check = ParseJson(RestApiGet('/studies/'..studyId..'/instances'))
+This line makes a REST API GET request to the Orthanc server. It calls /studies/{studyId}/instances, which retrieves information about the instances (or images) within the study. The result is parsed from JSON format into a Lua table and stored in the variable check.
+lua
+Copy code
+    local instanceTags = ParseJson(RestApiGet('/instances/'..check[1]["ID"]..'/simplified-tags'))
+This line uses the ID of the first instance (image) from the check result (check[1]["ID"]) and sends another REST API GET request to fetch simplified tags for that specific instance. The tags for this instance are parsed from JSON format into the instanceTags variable.
+lua
+Copy code
+    local patientName = instanceTags["PatientName"]
+    local patientAge = string.sub(instanceTags["PatientAge"], 2, 3)
+    local patientGender = instanceTags["PatientSex"]
+    local patientID = instanceTags["PatientID"]
+    local studyDescription = instanceTags["StudyDescription"]
+    local address = instanceTags["InstitutionAddress"]
+    local studyDate = string.sub(instanceTags["StudyDate"], 7)..'-'..string.sub(instanceTags["StudyDate"], 5, 6)..'-'..string.sub(instanceTags["StudyDate"], 1, 4)
+    local bodyPart = instanceTags["BodyPartExamined"]
+These lines extract various pieces of information from the instanceTags table:
+patientName: The name of the patient.
+patientAge: The patient's age (note that string.sub(instanceTags["PatientAge"], 2, 3) is used to extract only the last two digits of the age).
+patientGender: The patient's gender (e.g., "M" or "F").
+patientID: The unique patient identifier.
+studyDescription: A description of the study (e.g., "Chest X-ray").
+address: The institution's address.
+studyDate: The date the study was performed (reformatted into YYYY-MM-DD).
+bodyPart: The part of the body examined (e.g., "Chest").
+lua
+Copy code
+    local command = 'python3 /usr/share/orthanc/Scripts/reportingbot.py "'..studyId..'" "'..patientName..'" "'..patientAge..'" "'..patientGender..'" "'..patientID..'" "'..studyDescription..'" "'..address..'" "'..studyDate..'" "'..bodyPart..'"'
+This line constructs a command that will execute a Python script (reportingbot.py) using python3. It passes the extracted information (study ID, patient details, study description, etc.) as arguments to the Python script. These values are concatenated into a string and passed as arguments to the Python script.
+lua
+Copy code
+    print("Executing command:", command)
+This line prints the command that will be executed to the console for debugging purposes.
+lua
+Copy code
+    local handle = io.popen(command)
+    local result = handle:read("*a")
+    print(result)
+The command is executed using io.popen(command), which runs the constructed command in the background and captures the output.
+The handle:read("*a") command reads all the output from the command and stores it in the variable result.
+The result is printed to the console.
+How to Get Hospital Name and Referring Doctor's Name:
+In Orthanc, the hospital name and referring doctor information are typically stored in the DICOM metadata associated with the study. These fields are generally available as part of the DICOM tags, so we can extract them in the same way you are extracting other tags.
+
+The DICOM tags for the hospital and referring doctor might look like this:
+
+Hospital Name: InstitutionName
+Referring Doctor's Name: ReferringPhysicianName
+To retrieve these values, you can add two more variables in the Lua function, similar to the other variables you're extracting. Modify the script as follows:
+
+lua
+Copy code
+    local hospitalName = instanceTags["InstitutionName"]  -- Hospital Name
+    local referringDoctor = instanceTags["ReferringPhysicianName"]  -- Referring Doctor's Name
+Full Updated Script with Additional Fields:
+lua
+Copy code
+print("Starting Lua script...")
+
+function OnStableStudy(studyId, tags, metadata)
+    -- Fetch instances of the study
+    local check = ParseJson(RestApiGet('/studies/'..studyId..'/instances'))
+
+    -- Fetch simplified tags for the first instance
+    local instanceTags = ParseJson(RestApiGet('/instances/'..check[1]["ID"]..'/simplified-tags'))
+
+    -- Extract various tags
+    local patientName = instanceTags["PatientName"]
+    local patientAge = string.sub(instanceTags["PatientAge"], 2, 3)
+    local patientGender = instanceTags["PatientSex"]
+    local patientID = instanceTags["PatientID"]
+    local studyDescription = instanceTags["StudyDescription"]
+    local address = instanceTags["InstitutionAddress"]
+    local studyDate = string.sub(instanceTags["StudyDate"], 7)..'-'..string.sub(instanceTags["StudyDate"], 5, 6)..'-'..string.sub(instanceTags["StudyDate"], 1, 4)
+    local bodyPart = instanceTags["BodyPartExamined"]
+
+    -- New fields
+    local hospitalName = instanceTags["InstitutionName"]  -- Hospital Name
+    local referringDoctor = instanceTags["ReferringPhysicianName"]  -- Referring Doctor's Name
+
+    -- Prepare the Python command with the new fields
+    local command = 'python3 /usr/share/orthanc/Scripts/reportingbot.py "'..studyId..'" "'..patientName..'" "'..patientAge..'" "'..patientGender..'" "'..patientID..'" "'..studyDescription..'" "'..address..'" "'..studyDate..'" "'..bodyPart..'" "'..hospitalName..'" "'..referringDoctor..'"'
+
+    -- Print the command for debugging
+    print("Executing command:", command)
+
+    -- Execute the command and capture the output
+    local handle = io.popen(command)
+    local result = handle:read("*a")
+    print(result)
+end
+Explanation of the Added Fields:
+hospitalName: This is the value for the InstitutionName DICOM tag, which typically holds the name of the hospital or institution where the study was performed.
+referringDoctor: This corresponds to the ReferringPhysicianName DICOM tag, which contains the name of the referring physician for the study.
+Conclusion:
+By adding these two lines to the Lua script, you will retrieve the hospital name and the referring doctor's name from the DICOM tags. These values are then passed as additional arguments to your Python script (reportingbot.py), allowing you to use them within that script for further processing or reporting.

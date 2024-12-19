@@ -1,0 +1,74 @@
+# This is the new reportingbot.py file added by me (09 dec 24) 
+==================================================================
+# This is the python file that will add the data to our own database (botdb present on our own server) along with the institution and referring doctor details too - Himanshu.
+import sys
+import psycopg2
+from psycopg2 import sql
+
+
+#Orthanc generated study id obtained from system variable
+study_id = sys.argv[1] or "N/A"
+
+#patientName variable obtained from system variable
+patientName = sys.argv[2] or "N/A"
+
+#patientAge variable obtained from system variable
+patientAge = sys.argv[3] or "N/A"
+
+#patientGender variable obtained from system variable
+patientGender = sys.argv[4] or "N/A"
+
+#patientId variable obtained from system variable
+patientId = sys.argv[5] or "N/A"
+
+#studyDesc variable obtained from system variable
+studyDesc = sys.argv[6] or "N/A"
+
+#address variable obtained from system variable
+address = sys.argv[7] or "N/A"
+
+#studyDate variable obtained from system variable
+studyDate = sys.argv[8] or "N/A"
+
+#bodyParts variable obtained from system variable
+bodyParts = sys.argv[9] or "N/A"
+
+#Adding the institution name also obtained from the system variable
+institutionName = sys.argv[10] or "N/A"
+
+#Adding the referring doctor name also obtained fromt the system variable
+referringDoctorName = sys.argv[11] or "N/A"
+
+
+
+
+# Create a tuple of all the data to insert into the PostgreSQL database
+data_to_insert = (patientName, patientId, patientAge, patientGender, studyDate, study_id, studyDesc, False, False, '', address, bodyParts, institutionName, referringDoctorName, None)
+
+# Connect to PostgreSQL database
+conn = psycopg2.connect(
+    dbname='botdb',
+    user='postgres',
+    password='postgres',
+    host='10.12.0.92',
+    port='5432'
+)
+
+# Create a cursor object
+cursor = conn.cursor()
+
+# Insert the data into the users_dicomdata table
+insert_query = """
+    INSERT INTO users_dicomdata (
+        patient_name, patient_id, age, gender, study_date, study_id, study_description, "isDone", "NonReportable", notes, location, body_part_examined, institution_name, referring_doctor_name, whatsapp_number
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+"""
+cursor.execute(insert_query, data_to_insert)
+
+# Commit the transaction
+conn.commit()
+
+# Close the cursor and connection
+cursor.close()
+conn.close()
+aman.gupta@ip-10-12-1-83:~/Scripts$
