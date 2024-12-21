@@ -1,49 +1,148 @@
 # This is the new reportingbot.py file added by me (16 dec 24) 
 ==================================================================
 # This is the python file that will add the data to our own database (botdb present on our own server) along with the institution and referring doctor details too - Himanshu.
+aman.gupta@ip-10-12-1-83:~/Scripts$ cat reportingbot.py
 import sys
 import psycopg2
 from psycopg2 import sql
+from datetime import datetime
+
+# Function to get the received timestamp of a study
+def get_study_creation_time(study_id):
+    try:
+        # Now connecting to the orthanc db to get the timestamp when the data was received.
+        conn = psycopg2.connect(
+            dbname='orthanc',
+            user='postgres',
+            password='postgres',
+            host='10.12.0.92',
+            port='5432'
+        )
+
+        # Creating a cursor object to interact with the database
+        cursor = conn.cursor()
+
+        # Query to get the internalid of the study from resources using publicid
+        query = """
+            SELECT internalid
+            FROM resources
+            WHERE publicid = %s
+        """
+
+        # Executing the query to get the internalid
+        cursor.execute(query, (study_id,))
+        result = cursor.fetchone()
+
+        if result:
+            internalid = result[0]
+            # Query to get the timestamp from changes using internalid
+            query = """
+                SELECT date
+                FROM changes
+                WHERE internalid = %s
+                ORDER BY seq ASC
+                LIMIT 1
+            """
+            cursor.execute(query, (internalid,))
+            result = cursor.fetchone()
+
+            if result:
+                # If the result is found, return the raw timestamp from the changes table
+                return result[0]
+            else:
+                print(f"No change record found for internalid {internalid}.")
+                return None
+        else:
+            print(f"Study with ID {study_id} not found in resources table.")
+            return None
+
+    except Exception as e:
+        print(f"Error while querying the database: {e}")
+        return None
+    finally:
+        # Closing the cursor and connection
+        cursor.close()
+        conn.close()
+
+# Function to convert study time to Django-friendly format
+def convert_study_time_to_django_format(study_time):
+    if study_time != "N/A" and len(study_time) == 6:  # Make sure it’s in the correct format
+        try:
+            # Convert the time from HHMMSS format (e.g., "100803") to a Django-friendly TimeField format
+            return datetime.strptime(study_time, "%H%M%S").time()
+        except ValueError:
+            print(f"Error: Invalid study time format: {study_time}")
+            return datetime.strptime("000000", "%H%M%S").time()
+    else:
+        print(f"Error: Invalid study time provided: {study_time}")
+        return datetime.strptime("000000", "%H%M%S").time()
 
 
-#Orthanc generated study id obtained from system variable
+# Orthanc generated study id obtained from system variable
 study_id = sys.argv[1] or "N/A"
 
-#patientName variable obtained from system variable
+# patientName variable obtained from system variable
 patientName = sys.argv[2] or "N/A"
 
-#patientAge variable obtained from system variable
+# patientAge variable obtained from system variable
 patientAge = sys.argv[3] or "N/A"
 
-#patientGender variable obtained from system variable
+# patientGender variable obtained from system variable
 patientGender = sys.argv[4] or "N/A"
 
-#patientId variable obtained from system variable
+# patientId variable obtained from system variable
 patientId = sys.argv[5] or "N/A"
 
-#studyDesc variable obtained from system variable
+# studyDesc variable obtained from system variable
 studyDesc = sys.argv[6] or "N/A"
 
-#address variable obtained from system variable
+# address variable obtained from system variable
 address = sys.argv[7] or "N/A"
 
-#studyDate variable obtained from system variable
+# studyDate variable obtained from system variable
 studyDate = sys.argv[8] or "N/A"
 
-#bodyParts variable obtained from system variable
+# bodyParts variable obtained from system variable
 bodyParts = sys.argv[9] or "N/A"
 
-#Adding the institution name also obtained from the system variable
+# Adding the institution name also obtained from the system variable
 institutionName = sys.argv[10] or "N/A"
 
-#Adding the referring doctor name also obtained fromt the system variable
+# Adding the referring doctor name also obtained from the system variable
 referringDoctorName = sys.argv[11] or "N/A"
 
+# Adding the study time also obtained from the system variable
+studyTime = sys.argv[12] or "N/A"
 
+# Ensure study time is converted correctly
+converted_study_time = convert_study_time_to_django_format(studyTime)
+print(f"Converted Time: {converted_study_time}")
 
+# Adding the modality also obtained from the system variable
+modality = sys.argv[13] or "N/A"
+
+# Initialize creation_time
+creation_time = None
+
+# Getting the creation time from the orthanc db.
+if study_id != "N/A":
+    creation_time = get_study_creation_time(study_id)
+
+if creation_time:
+    print(f"Study was created at: {creation_time}")
+else:
+    print("Could not retrieve creation time.")
+
+# Assuming `creation_time` is in the format 'YYYYMMDDTHHMMSS'
+if creation_time:
+    creation_time = datetime.strptime(creation_time, '%Y%m%dT%H%M%S').time()
+
+print("Time object:", creation_time)
 
 # Create a tuple of all the data to insert into the PostgreSQL database
-data_to_insert = (patientName, patientId, patientAge, patientGender, studyDate, study_id, studyDesc, False, False, '', address, bodyParts, institutionName, referringDoctorName, None)
+data_to_insert = (patientName, patientId, patientAge, patientGender, studyDate, converted_study_time, creation_time,
+                  modality, study_id, studyDesc, False, False, 'Orthanc Pacs Patient', address, bodyParts, institutionName,
+                  referringDoctorName, None)
 
 # Connect to PostgreSQL database
 conn = psycopg2.connect(
@@ -60,8 +159,8 @@ cursor = conn.cursor()
 # Insert the data into the users_dicomdata table
 insert_query = """
     INSERT INTO users_dicomdata (
-        patient_name, patient_id, age, gender, study_date, study_id, study_description, "isDone", "NonReportable", notes, location, body_part_examined, institution_name, referring_doctor_name, whatsapp_number
-    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+        patient_name, patient_id, age, gender, study_date, study_time, recived_on_orthanc, "Modality", study_id, study_description, "isDone", "NonReportable", notes, location, body_part_examined, institution_name, referring_doctor_name, whatsapp_number, recived_on_db
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
 """
 cursor.execute(insert_query, data_to_insert)
 
@@ -71,5 +170,7 @@ conn.commit()
 # Close the cursor and connection
 cursor.close()
 conn.close()
+
+aman.gupta@ip-10-12-1-83:~/Scripts$
 
 aman.gupta@ip-10-12-1-83:~/Scripts$
