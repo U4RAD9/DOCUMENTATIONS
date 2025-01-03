@@ -1,0 +1,398 @@
+# This is the complete data or information when i try to inspect the container using it's container id : HIMANSHU
+==================================================================================================================
+aman.gupta@ip-10-12-1-83:/orthanc-logs$ docker inspect 38310e85325f
+[
+    {
+        "Id": "38310e85325ffc145cae6d0428f472df2d4f5ab1fc059015569d2eeea2401390",
+        "Created": "2025-01-03T10:58:16.831031826Z",
+        "Path": "/docker-entrypoint.sh",
+        "Args": [
+            "/tmp/orthanc.json"
+        ],
+        "State": {
+            "Status": "running",
+            "Running": true,
+            "Paused": false,
+            "Restarting": false,
+            "OOMKilled": false,
+            "Dead": false,
+            "Pid": 192530,
+            "ExitCode": 0,
+            "Error": "",
+            "StartedAt": "2025-01-03T10:58:17.039934642Z",
+            "FinishedAt": "0001-01-01T00:00:00Z"
+        },
+        "Image": "sha256:38cc6e29b9f2a25a16cc570660c826ec99a987d24a734b8be34b55e9e6432544",
+        "ResolvConfPath": "/var/lib/docker/containers/38310e85325ffc145cae6d0428f472df2d4f5ab1fc059015569d2eeea2401390/resolv.conf",
+        "HostnamePath": "/var/lib/docker/containers/38310e85325ffc145cae6d0428f472df2d4f5ab1fc059015569d2eeea2401390/hostname",
+        "HostsPath": "/var/lib/docker/containers/38310e85325ffc145cae6d0428f472df2d4f5ab1fc059015569d2eeea2401390/hosts",
+        "LogPath": "/var/lib/docker/containers/38310e85325ffc145cae6d0428f472df2d4f5ab1fc059015569d2eeea2401390/38310e85325ffc145cae6d0428f472df2d4f5ab1fc059015569d2eeea2401390-json.log",
+        "Name": "/amangupta-orthanc-1",
+        "RestartCount": 0,
+        "Driver": "overlay2",
+        "Platform": "linux",
+        "MountLabel": "",
+        "ProcessLabel": "",
+        "AppArmorProfile": "docker-default",
+        "ExecIDs": null,
+        "HostConfig": {
+            "Binds": [
+                "/orthanc-logs:/logs:rw",
+                "/home/aman.gupta/Scripts:/usr/share/orthanc/Scripts:rw",
+                "/home/aman.gupta/Test:/tmp:rw"
+            ],
+            "ContainerIDFile": "",
+            "LogConfig": {
+                "Type": "json-file",
+                "Config": {}
+            },
+            "NetworkMode": "amangupta_default",
+            "PortBindings": {
+                "8042/tcp": [
+                    {
+                        "HostIp": "",
+                        "HostPort": "8042"
+                    }
+                ]
+            },
+            "RestartPolicy": {
+                "Name": "unless-stopped",
+                "MaximumRetryCount": 0
+            },
+            "AutoRemove": false,
+            "VolumeDriver": "",
+            "VolumesFrom": null,
+            "ConsoleSize": [
+                0,
+                0
+            ],
+            "CapAdd": null,
+            "CapDrop": null,
+            "CgroupnsMode": "private",
+            "Dns": null,
+            "DnsOptions": null,
+            "DnsSearch": null,
+            "ExtraHosts": [],
+            "GroupAdd": null,
+            "IpcMode": "private",
+            "Cgroup": "",
+            "Links": null,
+            "OomScoreAdj": 0,
+            "PidMode": "",
+            "Privileged": false,
+            "PublishAllPorts": false,
+            "ReadonlyRootfs": false,
+            "SecurityOpt": null,
+            "UTSMode": "",
+            "UsernsMode": "",
+            "ShmSize": 67108864,
+            "Runtime": "runc",
+            "Isolation": "",
+            "CpuShares": 0,
+            "Memory": 0,
+            "NanoCpus": 0,
+            "CgroupParent": "",
+            "BlkioWeight": 0,
+            "BlkioWeightDevice": null,
+            "BlkioDeviceReadBps": null,
+            "BlkioDeviceWriteBps": null,
+            "BlkioDeviceReadIOps": null,
+            "BlkioDeviceWriteIOps": null,
+            "CpuPeriod": 0,
+            "CpuQuota": 0,
+            "CpuRealtimePeriod": 0,
+            "CpuRealtimeRuntime": 0,
+            "CpusetCpus": "",
+            "CpusetMems": "",
+            "Devices": null,
+            "DeviceCgroupRules": null,
+            "DeviceRequests": null,
+            "MemoryReservation": 0,
+            "MemorySwap": 0,
+            "MemorySwappiness": null,
+            "OomKillDisable": null,
+            "PidsLimit": null,
+            "Ulimits": null,
+            "CpuCount": 0,
+            "CpuPercent": 0,
+            "IOMaximumIOps": 0,
+            "IOMaximumBandwidth": 0,
+            "Mounts": [
+                {
+                    "Type": "bind",
+                    "Source": "/home/aman.gupta/credentials/luaPath.txt",
+                    "Target": "/run/secrets/ORTHANC__LUA_SCRIPTS",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/home/aman.gupta/credentials/orthanc-users.json",
+                    "Target": "/run/secrets/ORTHANC__REGISTERED_USERS",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/home/aman.gupta/credentials/db-host.txt",
+                    "Target": "/run/secrets/ORTHANC__POSTGRESQL__HOST",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/home/aman.gupta/credentials/housekeeper-schedule.json",
+                    "Target": "/run/secrets/ORTHANC__HOUSEKEEPER__SCHEDULE",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/home/aman.gupta/credentials/aws-secretkey.txt",
+                    "Target": "/run/secrets/ORTHANC__AWS_S3_STORAGE__SECRET_KEY",
+                    "ReadOnly": true
+                },
+                {
+                    "Type": "bind",
+                    "Source": "/home/aman.gupta/credentials/db-password.txt",
+                    "Target": "/run/secrets/ORTHANC__POSTGRESQL__PASSWORD",
+                    "ReadOnly": true
+                }
+            ],
+            "MaskedPaths": [
+                "/proc/asound",
+                "/proc/acpi",
+                "/proc/kcore",
+                "/proc/keys",
+                "/proc/latency_stats",
+                "/proc/timer_list",
+                "/proc/timer_stats",
+                "/proc/sched_debug",
+                "/proc/scsi",
+                "/sys/firmware",
+                "/sys/devices/virtual/powercap"
+            ],
+            "ReadonlyPaths": [
+                "/proc/bus",
+                "/proc/fs",
+                "/proc/irq",
+                "/proc/sys",
+                "/proc/sysrq-trigger"
+            ]
+        },
+        "GraphDriver": {
+            "Data": {
+                "LowerDir": "/var/lib/docker/overlay2/4b006d5f2c704be2816592e1ecab90c201c0504d77daab70cd813394617b58c4-init/diff:/var/lib/docker/overlay2/nct1n4l6uoeklc7yxex9yb1xn/diff:/var/lib/docker/overlay2/86bp7o1aovtv295kav1xgt10c/diff:/var/lib/docker/overlay2/zyiku5nl71xy7q7j23mejmrvn/diff:/var/lib/docker/overlay2/0b871d29a63098dc0c1256af01bcfea6dae994c4d3aaef542ce8438ee0b39164/diff:/var/lib/docker/overlay2/9290e958b2bb64c7cbc205b7c357a3de5ed36cfd1af0c15c816d3a467316833b/diff:/var/lib/docker/overlay2/048ff7fb3a4a91d1aaed3886ecca1c4630f910a023ac544709ec0ac4cc82b67a/diff:/var/lib/docker/overlay2/a3798a650b227ae408c4adcb3c0b0f1e85c0956ee740acafe8c634bf901d79ab/diff:/var/lib/docker/overlay2/be52c4ad0771fd8d6a5342e6f506dc2f61bb19a9981cdf53e866181d01ed97e3/diff:/var/lib/docker/overlay2/d19a4a4b20619794db6de90398e0119917a00da1f89865010efcd67097264803/diff:/var/lib/docker/overlay2/ff6bafa95e94e1061d14f217f4991cb8be4cfd6a4d4166cbadd781b4b3d39cc0/diff:/var/lib/docker/overlay2/dd1bfa555cfeee91287b0756cd34ff3d197abec46b160de7a5f85473ab73fc21/diff:/var/lib/docker/overlay2/d4a719187f53eddcdd94262492b9362f978694692cf94e8314f66abd8e1625a7/diff:/var/lib/docker/overlay2/fdb51e96aa40ad3792919904e303698b540daf7a1b3debf2d9e015c460a6ecf7/diff:/var/lib/docker/overlay2/b2f4aae109323870c2b548e30c48202d6e4dae9bbd7f8b30ad82f0879312544a/diff:/var/lib/docker/overlay2/fe4bb974d0f8cbfd4511c293d99561b48602645de5bfdca9051e40ae5b11d107/diff:/var/lib/docker/overlay2/9baa5e40fb38fa4da1ae05176db5a79d0eaf93f97b289ce8df16caa9fb3e74db/diff:/var/lib/docker/overlay2/2e620167888bb6534366a6fc42eb684d567654d3c82c3d07c402d70b242e75fb/diff:/var/lib/docker/overlay2/e977cf304f8c31515157e496206cd3edcd99127b79486401d54dd4b2c8f9cec7/diff:/var/lib/docker/overlay2/8e25f5ee5659a27a2ae22600ada5238b1d1de6e53c7c1c615bd710067bf39a61/diff:/var/lib/docker/overlay2/205c78f826aac8e860b0dd35a43238e281d53ba80aa4d16a56b09ace619803c9/diff:/var/lib/docker/overlay2/18c8adeec998fdfc5a2603ca5c2fcb9befc26a3bbcd3b95e59759678dfac6ddd/diff:/var/lib/docker/overlay2/b34ed0bc1b31f82c0c1c7ae4d5c0157e7ccdb4fde2d9002eef7df9a5eac5a12a/diff:/var/lib/docker/overlay2/fcc5ac63f6829a700c9e41544cb4a00479c91325dd7ff06793a21db11526c977/diff:/var/lib/docker/overlay2/2be650c7d0991e3d30ade4b893c129768bb94e1dbd01a41d752420625e748b4a/diff:/var/lib/docker/overlay2/a6c775c7d4f2d970dd54306984cadc3778dfc3750139ccec72b03ae53748043a/diff:/var/lib/docker/overlay2/d6a042cb23251fb5b824b0a01cfc3a511f96c9b52490a1974729ddd4275a70bc/diff:/var/lib/docker/overlay2/c1e9cb3b2b8be618a94ec1bbc49555132a75bc92c7bf13256714d4c32abd4333/diff:/var/lib/docker/overlay2/651f1009410fe06ef75dc39cdb32d11db67dd9158dc3a83e161cf06137ef4d5b/diff:/var/lib/docker/overlay2/b83e0654712ef09a4f217e6b8df528690821bd8e764f4573fd5bd199d8a40613/diff:/var/lib/docker/overlay2/3d1fd16e43a225b44f3f2cffbae9b84af012edbd8a88b5cc89237877640972d2/diff:/var/lib/docker/overlay2/22ffe75907bafd8c3fb1f9916f90b19c0047eaf8d056b826aefd8a579584c6b9/diff:/var/lib/docker/overlay2/e10b44bf686d17dc5fe73cdc1381826c33024b0ed9448b543e0d1fa96a9645e2/diff:/var/lib/docker/overlay2/5cd493d634517f8269092420e7569aa829ab64941097632fbef7d9414d7e39a7/diff:/var/lib/docker/overlay2/8c3a8cbbb9bcfaaa5a9b456b2d9294c2d33a931c804987d7c3324cfed409d667/diff:/var/lib/docker/overlay2/226f4b3d45707074e4bc1541dcb9f21aaafd9f9514574f13e381041d3678b58d/diff:/var/lib/docker/overlay2/ae333e08306745b742f6fb814f1d2dc6c4710d1f3bdf2a4d498b18e7b75ccffb/diff:/var/lib/docker/overlay2/a910d1f639cc019a96c7c370003c7f5158403999310f3f1627b26e2eec6f7415/diff:/var/lib/docker/overlay2/1adfcc16b4b81e7f1cfb4c704a66bbb481599e6aa2d9ee20959bad95c3597e21/diff:/var/lib/docker/overlay2/55e57f47dd905059c617dc7a4da9e38c306814a6c1acaaa8428b07b422d01df9/diff:/var/lib/docker/overlay2/ba52b7bb7f975430fc9f43abb19345239de1fc73568d6314d41b8a40a279f0fe/diff:/var/lib/docker/overlay2/0fdcede47321ceca944e7f3c44d4fc8741aee0f53f9a493ae6143f8addf7c17c/diff:/var/lib/docker/overlay2/91750c1cb4ce0942953c406305d8540e09186f92b2a94dcbe1ea085937541ced/diff:/var/lib/docker/overlay2/7029509ff04c3f5539f947734660b0a37114d95b60690b0d0d283e75d25a970e/diff:/var/lib/docker/overlay2/be8dd935a99def18d940c2174b3bb4f69d5f8d310644d967dbc34b4e90f75f91/diff:/var/lib/docker/overlay2/9bb96558d02645185f1c1fdf2867eb95445d6e9b75719b26ad22a92b5cfd00a4/diff:/var/lib/docker/overlay2/e3c71caf9fe009be86dd5456c6e5febf4622c01762ac281afbd48e1c04b7f5d6/diff:/var/lib/docker/overlay2/95afb2a91987b3f16e10d9f125b5f428aac56d1fd584c520fd0a847a839d25b1/diff:/var/lib/docker/overlay2/a964908689ce65ce5fc959e5f76b226f70091735a7b1805636e7bd2a3c61ff54/diff:/var/lib/docker/overlay2/3dea2672f857fdad7a88e9edd91a21facdef42e069b90498aaf20f126fc85388/diff:/var/lib/docker/overlay2/0ec8755a94e140c34a1ceb08a98eb38bd7d8fa7eea1a0eb8dde70c36f76ebb74/diff:/var/lib/docker/overlay2/e295fd98e0be8fd2fd6ac6098f860cd445c61d6d0dfcd5afc9692ea034b64e3b/diff:/var/lib/docker/overlay2/cfad259fa93e3859e0e0d008c9902479788f8116f2c6eaf953a41d3a4083a07f/diff:/var/lib/docker/overlay2/6a7b7dcb0600482077971a842d2c9b6adaa3453578765ef242555549eaab8e67/diff:/var/lib/docker/overlay2/bd618053709409f6dda6cb345ffec85ab5952600087b63f7bb546ee1608c92b7/diff:/var/lib/docker/overlay2/8d7a313935cddedef70ef476131accaa1cb4aeef2dd7bfb3ac6d0acf9f4afc90/diff:/var/lib/docker/overlay2/8eaca4547500cd2508422abbc9ecf46f6ce95599ce173b23e5849f03d1ecaa71/diff",
+                "MergedDir": "/var/lib/docker/overlay2/4b006d5f2c704be2816592e1ecab90c201c0504d77daab70cd813394617b58c4/merged",
+                "UpperDir": "/var/lib/docker/overlay2/4b006d5f2c704be2816592e1ecab90c201c0504d77daab70cd813394617b58c4/diff",
+                "WorkDir": "/var/lib/docker/overlay2/4b006d5f2c704be2816592e1ecab90c201c0504d77daab70cd813394617b58c4/work"
+            },
+            "Name": "overlay2"
+        },
+        "Mounts": [
+            {
+                "Type": "bind",
+                "Source": "/orthanc-logs",
+                "Destination": "/logs",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/aman.gupta/Scripts",
+                "Destination": "/usr/share/orthanc/Scripts",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/aman.gupta/Test",
+                "Destination": "/tmp",
+                "Mode": "rw",
+                "RW": true,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/aman.gupta/credentials/orthanc-users.json",
+                "Destination": "/run/secrets/ORTHANC__REGISTERED_USERS",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/aman.gupta/credentials/housekeeper-schedule.json",
+                "Destination": "/run/secrets/ORTHANC__HOUSEKEEPER__SCHEDULE",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/aman.gupta/credentials/aws-secretkey.txt",
+                "Destination": "/run/secrets/ORTHANC__AWS_S3_STORAGE__SECRET_KEY",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/aman.gupta/credentials/db-password.txt",
+                "Destination": "/run/secrets/ORTHANC__POSTGRESQL__PASSWORD",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/aman.gupta/credentials/luaPath.txt",
+                "Destination": "/run/secrets/ORTHANC__LUA_SCRIPTS",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            },
+            {
+                "Type": "bind",
+                "Source": "/home/aman.gupta/credentials/db-host.txt",
+                "Destination": "/run/secrets/ORTHANC__POSTGRESQL__HOST",
+                "Mode": "",
+                "RW": false,
+                "Propagation": "rprivate"
+            }
+        ],
+        "Config": {
+            "Hostname": "38310e85325f",
+            "Domainname": "",
+            "User": "",
+            "AttachStdin": false,
+            "AttachStdout": true,
+            "AttachStderr": true,
+            "ExposedPorts": {
+                "8042/tcp": {}
+            },
+            "Tty": false,
+            "OpenStdin": false,
+            "StdinOnce": false,
+            "Env": [
+                "ORTHANC_STORAGE_DIRECTORY=\"\"",
+                "ORTHANC__TRANSFERS__MAX_HTTP_RETRIES=5",
+                "ORTHANC__AWS_S3_STORAGE__ACCESS_KEY=secretkey",
+                "ORTHANC__POSTGRESQL__TRANSACTION_MODE=ReadCommitted",
+                "ORTHANC__DICOM_WEB__ENABLE_METADATA_CACHE=true",
+                "ORTHANC__DICOM_WEB__SERIES_METADATA=Full",
+                "ORTHANC__DICOM_WEB__STUDIES_METADATA=Full",
+                "ORTHANC__POSTGRESQL__ENABLE_VERBOSE_LOGS=true",
+                "ORTHANC__DICOM_WEB__ROOT=/dicom-web/",
+                "ORTHANC__AWS_S3_STORAGE__ENABLE_AWS_SDK_LOGS=true",
+                "ORTHANC__DE_IDENTIFY_LOGS=false",
+                "ORTHANC__POSTGRESQL__DATABASE=orthanc",
+                "TRANSFERS_PLUGIN_ENABLED=true",
+                "ORTHANC__STABLE_AGE=90",
+                "ORTHANC__AWS_S3_STORAGE__REGION=ap-south-1",
+                "ORTHANC__DICOM_WEB__ENABLE_WADO=true",
+                "ORTHANC__HTTP_TIMEOUT=3600",
+                "VERBOSE_ENABLED=true",
+                "ORTHANC__AWS_S3_STORAGE__BUCKET_NAME=u4rad-s3-orthnac",
+                "ORTHANC__DICOM_SERVER_ENABLED=true",
+                "ORTHANC__STORAGE_ACCESS_ON_FIND=Always",
+                "ORTHANC_AWS_S3_STORAGE_ENABLE_STORAGE=true",
+                "ORTHANC__AWS_S3_STORAGE__REQUEST_TIMEOUT=60000",
+                "LOGDIR=/logs",
+                "ORTHANC__POSTGRESQL__USERNAME=postgres",
+                "ORTHANC__POSTGRESQL__ENABLE_SSL=false",
+                "ORTHANC__DICOM_WEB__SSL=false",
+                "ORTHANC__DICOM_WEB__ENABLE=true",
+                "ORTHANC__DICOM_WEB__METADATA_WORKER_THREADS_COUNT=4",
+                "ORTHANC__HOUSEKEEPER__ENABLE=true",
+                "ORTHANC__POSTGRESQL__ENABLE_INDEX=true",
+                "VERBOSE_STARTUP=true",
+                "ORTHANC__POSTGRESQL__ENABLE_STORAGE=false",
+                "ORTHANC__PLUGIN__OHIF_ENABLE=true",
+                "ORTHANC__HTTP_REQUEST_TIMEOUT=3600",
+                "ORTHANC__POSTGRESQL__PORT=5432",
+                "ORTHANC__AUTHENTICATION_ENABLED=true",
+                "ORTHANC__DICOM_WEB__WADO_ROOT=/wado",
+                "PATH=/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin",
+                "SSL_CERT_DIR=/etc/ssl/certs",
+                "MALLOC_ARENA_MAX=5"
+            ],
+            "Cmd": [
+                "/tmp/orthanc.json"
+            ],
+            "Image": "u4rad-orthanc",
+            "Volumes": null,
+            "WorkingDir": "",
+            "Entrypoint": [
+                "/docker-entrypoint.sh"
+            ],
+            "OnBuild": null,
+            "Labels": {
+                "com.docker.compose.config-hash": "5502b48e2eea3c03d58dc2a0ed2e88342681f25a6aae9a6be657d6c9b0b989f4",
+                "com.docker.compose.container-number": "1",
+                "com.docker.compose.depends_on": "",
+                "com.docker.compose.image": "sha256:38cc6e29b9f2a25a16cc570660c826ec99a987d24a734b8be34b55e9e6432544",
+                "com.docker.compose.oneoff": "False",
+                "com.docker.compose.project": "amangupta",
+                "com.docker.compose.project.config_files": "/home/aman.gupta/docker-compose.yml",
+                "com.docker.compose.project.working_dir": "/home/aman.gupta",
+                "com.docker.compose.service": "orthanc",
+                "com.docker.compose.version": "2.29.1"
+            }
+        },
+        "NetworkSettings": {
+            "Bridge": "",
+            "SandboxID": "228c9aecca45437912eaa14371957d62629440c5d8fbc73b5e082d69d7e409ce",
+            "SandboxKey": "/var/run/docker/netns/228c9aecca45",
+            "Ports": {
+                "8042/tcp": [
+                    {
+                        "HostIp": "0.0.0.0",
+                        "HostPort": "8042"
+                    },
+                    {
+                        "HostIp": "::",
+                        "HostPort": "8042"
+                    }
+                ]
+            },
+            "HairpinMode": false,
+            "LinkLocalIPv6Address": "",
+            "LinkLocalIPv6PrefixLen": 0,
+            "SecondaryIPAddresses": null,
+            "SecondaryIPv6Addresses": null,
+            "EndpointID": "",
+            "Gateway": "",
+            "GlobalIPv6Address": "",
+            "GlobalIPv6PrefixLen": 0,
+            "IPAddress": "",
+            "IPPrefixLen": 0,
+            "IPv6Gateway": "",
+            "MacAddress": "",
+            "Networks": {
+                "amangupta_default": {
+                    "IPAMConfig": null,
+                    "Links": null,
+                    "Aliases": [
+                        "amangupta-orthanc-1",
+                        "orthanc"
+                    ],
+                    "MacAddress": "02:42:ac:12:00:02",
+                    "DriverOpts": null,
+                    "NetworkID": "ae6746bdd7361bb368f3e7822ea21b876b120ff7e6ce1b2dff20445085c22e6c",
+                    "EndpointID": "2b71b5754de58ce0bec6aa4ba561ae6f46ebe6bbec58f14d778a0af22b35c5b9",
+                    "Gateway": "172.18.0.1",
+                    "IPAddress": "172.18.0.2",
+                    "IPPrefixLen": 16,
+                    "IPv6Gateway": "",
+                    "GlobalIPv6Address": "",
+                    "GlobalIPv6PrefixLen": 0,
+                    "DNSNames": [
+                        "amangupta-orthanc-1",
+                        "orthanc",
+                        "38310e85325f"
+                    ]
+                }
+            }
+        }
+    }
+]
+aman.gupta@ip-10-12-1-83:/orthanc-logs$
