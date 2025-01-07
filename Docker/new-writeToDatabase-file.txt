@@ -2,6 +2,7 @@ aman.gupta@ip-10-12-1-83:~/Scripts$ cat writeToDatabase.lua
 -- This is the updated code of lua script for storing data on our own database (bot db) along with the institution name and referring doctor name. - Himanshu.
 ---------------------------------------------------------------------
 aman.gupta@ip-10-12-1-83:~/Scripts$ cat writeToDatabase.lua
+aman.gupta@ip-10-12-1-83:~/Scripts$ cat writeToDatabase.lua
 -- This is the updated code of lua script for storing data on our own database (bot db) along with the institution name and referring doctor name. - Himanshu.
 print("Starting Lua script...")
 function OnStableStudy(studyId, tags, metadata)
@@ -10,22 +11,30 @@ function OnStableStudy(studyId, tags, metadata)
         local instanceTags = ParseJson(RestApiGet('/instances/'..check[1]["ID"]..'/simplified-tags'))
 
         -- Extracting required fields
-        local patientName = instanceTags["PatientName"] or "N/A"
-        local patientAge = string.sub(instanceTags["PatientAge"], 2, 3) or "N/A"
-        local patientGender = instanceTags["PatientSex"] or "N/A"
-        local patientID = instanceTags["PatientID"] or "N/A"
-        local studyDescription = instanceTags["StudyDescription"] or "N/A"
-        local address = instanceTags["InstitutionAddress"] or "N/A"
-        local studyDate = string.sub(instanceTags["StudyDate"], 7)..'-'..string.sub(instanceTags["StudyDate"], 5, 6)..'-'..string.sub(instanceTags["StudyDate"], 1, 4) or "N/A"
-        local bodyPart = instanceTags["BodyPartExamined"] or "N/A"
+        local patientName = instanceTags["PatientName"] or "NA"
+        -- Replacing "^" with a space
+        patientName = string.gsub(patientName, "%^", " ")
+        local patientAge = instanceTags["PatientAge"]
+        -- Handling nil error in the patientAge.
+        if patientAge then
+          patientAge = string.sub(patientAge, 2, 3)
+        else
+          patientAge = "NA"
+        end
+        local patientGender = instanceTags["PatientSex"] or "NA"
+        local patientID = instanceTags["PatientID"] or "NA"
+        local studyDescription = instanceTags["StudyDescription"] or "NA"
+        local address = instanceTags["InstitutionAddress"] or "NA"
+        local studyDate = string.sub(instanceTags["StudyDate"], 7)..'-'..string.sub(instanceTags["StudyDate"], 5, 6)..'-'..string.sub(instanceTags["StudyDate"], 1, 4) or "NA"
+        local bodyPart = instanceTags["BodyPartExamined"] or "NA"
 
         -- Extracting Institution Name and Referring Doctor Name
-        local institutionName = instanceTags["InstitutionName"] or "N/A"
-        local referringDoctorName = instanceTags["ReferringPhysicianName"] or "N/A"
+        local institutionName = instanceTags["InstitutionName"] or "NA"
+        local referringDoctorName = instanceTags["ReferringPhysicianName"] or "NA"
 
         -- Extracting Study time and Modality too
-        local modality = instanceTags["Modality"] or "N/A"
-        local studyTime = string.sub(instanceTags["StudyTime"], 1, 6) or "N/A"
+        local modality = instanceTags["Modality"] or "NA"
+        local studyTime = string.sub(instanceTags["StudyTime"], 1, 6) or "NA"
 
         -- Building the command to call the Python script
         local command = 'python3 /usr/share/orthanc/Scripts/reportingbot.py "'..studyId..'" "'..patientName..'" "'..patientAge..'" "'..patientGender..'" "'..patientID..'" "'..studyDescription..'" "'..address..'" "'..studyDate..'" "'..bodyPart..'" "'..institutionName..'" "'..referringDoctorName..'" "'..studyTime..'" "'..modality..'"'
