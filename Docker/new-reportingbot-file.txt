@@ -141,7 +141,7 @@ print("Time object:", creation_time)
 
 # Create a tuple of all the data to insert into the PostgreSQL database
 data_to_insert = (patientName, patientId, patientAge, patientGender, studyDate, converted_study_time, creation_time,
-                  modality, study_id, studyDesc, False, False, 'Orthanc Pacs Patient', address, bodyParts, institutionName,
+                  modality, study_id, studyDesc, False, False, False, False, False, False, 'Orthanc Pacs Patient', address, bodyParts, institutionName,
                   referringDoctorName, None)
 
 # Connect to PostgreSQL database
@@ -159,8 +159,8 @@ cursor = conn.cursor()
 # Insert the data into the users_dicomdata table
 insert_query = """
     INSERT INTO users_dicomdata (
-        patient_name, patient_id, age, gender, study_date, study_time, recived_on_orthanc, "Modality", study_id, study_description, "isDone", "NonReportable", notes, location, body_part_examined, institution_name, referring_doctor_name, whatsapp_number, recived_on_db
-    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
+        patient_name, patient_id, age, gender, study_date, study_time, recived_on_orthanc, "Modality", study_id, study_description, "isDone", "NonReportable", "Mlc", urgent, vip, twostepcheck, notes, location, body_part_examined, institution_name, referring_doctor_name, whatsapp_number, recived_on_db
+    ) VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, CURRENT_TIMESTAMP)
 """
 cursor.execute(insert_query, data_to_insert)
 
@@ -170,7 +170,4 @@ conn.commit()
 # Close the cursor and connection
 cursor.close()
 conn.close()
-
-aman.gupta@ip-10-12-1-83:~/Scripts$
-
 aman.gupta@ip-10-12-1-83:~/Scripts$
