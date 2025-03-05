@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 The files that are currently used :
 ### Orthanc Documentation :
 Here all the files are present, using which i can understand the workflow of the current orthanc workflow in our reporting bot.
@@ -16,3 +17,9 @@ Here all the files are present, using which i can understand the workflow of the
 1. Here i have the containers name and details that i am using on our cloud server (o/p of the linus command : docker ps)
 2. Other related commands, notes will be added too.
 
+=======
+**All the Documentation / Notes List : **
+-------------------------------------------
+1. Adding the OTHM Documenation, both new one and the previous one.
+2. 
+>>>>>>> 35536a39b1d8d59dafe3da6e3f0ed4bca62f6242
